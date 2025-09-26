@@ -12,6 +12,7 @@
 #include "lib/types.h"
 #include<stack>
 #include<map>
+#include <chrono>
 #define USE_DEBUG false
 #define max_path_length 100
 using namespace std;
@@ -42,7 +43,7 @@ class solver{
         //approximate the lower bound of moves to finish the pos
         int min_step_estimate(Position pos);
         bool dfs(Position pos, int limit_depth, Move* moves, int &depth);
-
+        int dfStack(Position pos, int limit_depth, Move* moves);
 };
 
 void resolve(Position &pos);

@@ -1,5 +1,7 @@
 #include "solver.h"
 #include "lib/helper.h"
+#define FAIL (-1)
+using namespace std::chrono;
 /*
  * Wakasagi will call this and only this function.
  * Below you will find examples of functions you might use
@@ -46,47 +48,70 @@ void solver::init(bool clear_visited_states = false){
 
         //dfs of non-revursion version
         //return the path length
-        // int dfStack(Position pos, int limit_depth, Move* moves){
-        //     const string END = "end";
-        //     init();
-        //     int depth = 0;
-        //     stack<string> search_space;
-        //     stack<Move> search_actions;
-        //     search_space.push( pos.toFEN() );
-        //     MoveList<All, Black> first_moves(pos);
-        //     for(int i=0; i<first_moves.size(); i++){
-        //         search_actions.push( first_moves[i] );
-        //     }
-        //     while(!search_space.empty()){
-        //         string s_cur = search_space.top();
-        //         search_space.pop();
-                
-        //         if(s_cur == END){
-        //             depth--;
-        //             continue;
-        //         }
 
-        //         Position current_pos(s_cur);
-        //         if( current_pos.winner() == Black ){
-        //             return depth;
-        //         }
+int solver::dfStack(Position pos, int limit_depth, Move* moves){
+    const string END = "end";
+    init();
+    int depth = 0;
+    stack<Move> search_space;
+    //top is the number of members of current stack top of the current top of search_space
+    stack<int> layer_cnt;
+    //top is the root(previous state) of the current stack top of search_space
+    stack<Position> prv_position;
+    
+    
+    prv_position.push(pos);
+    MoveList<All, Black> first_moves(pos);
+    layer_cnt.push(first_moves.size());
 
-        //         record(current_pos, depth);
-        //         MoveList<All, Black> nx_moves(current_pos);
-                
-        //         search_space.push(END);
-        //         for(int move_idx = 0; move_idx < nx_moves.size(); move_idx++){
-        //             Move nx_move = nx_moves[move_idx];
-        //             Position nx_state( pos.toFEN() );
-        //             nx_state.do_move(nx_move);
-        //             if(is_visited(nx_state, limit_depth)){
-        //                 continue;
-        //             }
-        //             search_space.push(nx_state.toFEN());
-        //         }
-        //         depth++;
-        //     }
-        // }
+    for(int i=0; i<first_moves.size(); i++){
+        search_space.push( first_moves[i] );
+    }
+    
+    while(!search_space.empty()){
+        if(layer_cnt.top() == 0){
+            layer_cnt.pop();
+            prv_position.pop();
+            depth--;
+        }
+
+        Move action_cur = search_space.top();
+        search_space.pop();
+        layer_cnt.top()--;
+
+        Position current_pos = prv_position.top();
+        current_pos.do_move( action_cur );
+
+        if( current_pos.winner() == Black ){
+            return depth;
+        }
+
+        record(current_pos, limit_depth - depth);
+        MoveList<All, Black> nx_moves(current_pos);
+        
+        // search_space.push(END);
+        prv_position.push(pos);
+        layer_cnt.push(0);
+        for(int move_idx = 0; move_idx < nx_moves.size(); move_idx++){
+            Move nx_move = nx_moves[move_idx];
+            Position nx_state(pos);
+            nx_state.do_move(nx_move);
+            if(is_visited(nx_state, limit_depth)){
+                continue;
+            }
+            search_space.push(nx_move);
+            layer_cnt.top()++;
+        }
+        if(layer_cnt.top() == 0){
+            layer_cnt.pop();
+            prv_position.pop();
+        }
+        else{
+            depth++;
+        }
+    }
+    return FAIL;
+}
 
 int solver::min_step_estimate(Position pos){
     int pieces = pos.pieces(Red);
@@ -94,6 +119,7 @@ int solver::min_step_estimate(Position pos){
 }
 
 bool solver::dfs(Position pos, int limit_depth, Move* moves, int &depth){
+    
     if(limit_depth < 0){
         return false;
     }
@@ -149,49 +175,8 @@ bool solver::dfs(Position pos, int limit_depth, Move* moves, int &depth){
 
 void resolve(Position &pos)
 {
-    /* You can use these aliases */
-    // info << "Output (only) your answers here!\n"; // ====> stdout <====
-    // debug << "Print debug info here!\n";          // stderr
-    // error << "Print errors here?\n";              // also stderr
 
-    // info << pos;
-
-    /* A random number generator is available globally */
-    int random_num_below_42 = rng(42);
-
-    /* Generate moves like this */
-    MoveList<All, Black> moves(pos); // `<All, Black>` is optional
-
-    /* Iterate all moves */
-    // for (Move mv : moves) {
-    //     info << mv;                       // print the move
-    //     Position pos_copy(pos);           // copy the position
-    //     bool done = pos_copy.do_move(mv); // do the move
-    // }
-
-    /* Get some pieces */
-    Board all_the_pieces = pos.pieces();
-    Board black_pieces   = pos.pieces(Black);
-    Board black_soldiers = pos.pieces(Black, Soldier);
-
-    /* Iterate those pieces */
-    // for (Square sq : BoardView(black_pieces)) {
-    //     info << "There is a black piece at square " << sq << ".";
-
-    //     // To get _complete_ information about the piece at a square,
-    //     // use peek_piece_at()
-    //     Piece p = pos.peek_piece_at(sq);
-    //     if (p.type == Advisor) {
-    //         info << " It is an advisor.";
-    //     }
-
-    //     info << "\n";
-    // }
-
-    /* Distance between two squares */
-    int dist      = distance(SQ_B2, SQ_C4);       // 3
-    int dist_rank = distance<Rank>(SQ_B2, SQ_C4); // 1
-
+    auto start = high_resolution_clock::now();
     Move opt_path[100];
     solver s;
     
@@ -200,12 +185,28 @@ void resolve(Position &pos)
         debug<<"start DFS\n";
 
     }
-    
+    int opt_path_len = 0;
+    // for(int d=1;d<=30;d++){
+    //     s.init();
+    //     opt_path_len = 0;
+    //     bool status = s.dfs(pos, d, opt_path, opt_path_len);
+    //     if(!status){
+    //         if(USE_DEBUG)
+    //             debug<<"fail at depth "<<d<<endl;
+    //         continue;
+    //     }
+    //     if(USE_DEBUG){
+    //         debug<<"visit cnt:" << s.visit_cnt<<endl;
+    //         debug<<  "movelen:" << opt_path_len <<endl;
+    //         debug << "DFS:\n";
+    //     }
+    //     break;
+    // }
     for(int d=1;d<=30;d++){
-        int opt_path_len = 0;
         s.init();
-        bool status = s.dfs(pos, d, opt_path, opt_path_len);
-        if(!status){
+        // opt_path_len = 0;
+        opt_path_len = s.dfStack(pos, d, opt_path);
+        if(opt_path_len == FAIL){
             if(USE_DEBUG)
                 debug<<"fail at depth "<<d<<endl;
             continue;
@@ -215,25 +216,16 @@ void resolve(Position &pos)
             debug<<  "movelen:" << opt_path_len <<endl;
             debug << "DFS:\n";
         }
-        for(int i=0;i<opt_path_len; i++){
-            info << opt_path[i];
-        }
         break;
     }
-    // info<<"End DFS\n";
-    /* Example: output a random legal move */
-    // info << "Random walking:" << std::endl;
-    // for (int counter = 21; counter -- /* counter slides to 0 */
-    //                                  \
-    //                                   \
-    //                                    \
-    //                                     > 0;) {
-    //     MoveList mvs(pos);
-    //     if (mvs.size() == 0) {
-    //         return;
-    //     }
-    //     Move chosen = mvs[rng(mvs.size())];
-    //     info << (21 - counter) << ". " << chosen;
-    //     pos.do_move(chosen);
-    // }
+
+
+    auto stop = high_resolution_clock::now();
+    auto duration = duration_cast<microseconds>(stop - start);
+    info << double(duration.count())*microseconds::period::num/microseconds::period::den << endl;
+
+    info << opt_path_len<<endl;
+    for(int i=0;i<opt_path_len; i++){
+        info << opt_path[i];
+    }
 }
