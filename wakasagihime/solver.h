@@ -43,7 +43,7 @@ class solver{
         bool is_visited(Position pos, int depth_limit);
         
         solver();
-        void init(bool clear_visited_states);
+        void init(bool clear_visited_states = false);
             
         //approximate the lower bound of moves to finish the pos
         int min_step_estimate(Position pos);

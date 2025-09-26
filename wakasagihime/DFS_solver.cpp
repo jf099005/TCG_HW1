@@ -18,7 +18,7 @@ bool solver::is_visited(Position pos, int depth_limit){
 solver::solver()
 {};
 
-void solver::init(bool clear_visited_states = false){
+void solver::init(bool clear_visited_states){
     this->visit_cnt = 0;
     if(clear_visited_states){
             this->visited_states.clear();
@@ -29,7 +29,6 @@ void solver::init(bool clear_visited_states = false){
         //return the path length
 
 int solver::dfStack(Position pos, int limit_depth, Move* moves){
-    const string END = "end";
     init();
     int depth = 0;
     stack<Move> search_space;
@@ -57,6 +56,8 @@ int solver::dfStack(Position pos, int limit_depth, Move* moves){
         Move action_cur = search_space.top();
         search_space.pop();
         layer_cnt.top()--;
+
+        visit_cnt++;
 
         Position current_pos = prv_position.top();
         current_pos.do_move( action_cur );

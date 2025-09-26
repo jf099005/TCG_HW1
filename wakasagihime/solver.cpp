@@ -55,8 +55,10 @@ void resolve(Position &pos)
         }
         opt_path_len = s.dfStack(pos, d, opt_path);
         if(opt_path_len == FAIL){
-            if(USE_DEBUG)
+            if(USE_DEBUG){
                 debug<<"fail at depth "<<d<<endl;
+                debug << "visited nodes:" << s.visit_cnt<<endl;
+            }
             continue;
         }
         if(USE_DEBUG){
