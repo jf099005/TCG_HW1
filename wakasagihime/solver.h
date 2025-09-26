@@ -13,8 +13,13 @@
 #include<stack>
 #include<map>
 #include <chrono>
-#define USE_DEBUG false
 #define max_path_length 100
+#define FAIL (-1)
+
+
+#define USE_DEBUG true
+
+
 using namespace std;
 
 inline int lowbit(int x){
