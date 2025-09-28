@@ -43,6 +43,12 @@
         "type_traits": "cpp",
         "tuple": "cpp",
         "typeinfo": "cpp",
-        "utility": "cpp"
+        "utility": "cpp",
+        "chrono": "cpp",
+        "algorithm": "cpp",
+        "format": "cpp",
+        "__bit_reference": "cpp",
+        "map": "cpp",
+        "set": "cpp"
     }
 }

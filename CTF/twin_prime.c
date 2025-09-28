@@ -16,13 +16,17 @@ int is_prime(int n)
 
     return 1;
 }
-
+#include<stdio.h>
 int main()
 {
     #define GOAL 23614847
     int count = 1;
     for (int i = 6; i < GOAL; i += 6) {
         count += is_prime(i - 1) && is_prime(i + 1);
+        if(count == 42 && is_prime(i - 1) && is_prime(i + 1)){
+            printf("at count = 42: %d\n", i);
+        }
     }
+    printf("total numbre of pairs: %d", count);
     return 0;
 }

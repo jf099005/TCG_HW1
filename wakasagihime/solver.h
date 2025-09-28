@@ -14,10 +14,10 @@
 #include<map>
 #include <chrono>
 #define max_path_length 100
-#define FAIL (114514)
+#define FAIL (-1)
 
 
-#define USE_DEBUG true
+#define USE_DEBUG false
 
 
 using namespace std;

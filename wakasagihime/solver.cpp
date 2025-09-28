@@ -32,7 +32,13 @@ void resolve(Position &pos)
     }
     int opt_path_len = 0;
     int L=0, R=30;
-    for(int d=1;d<=30;d++){
+    if(USE_DEBUG){
+        cout<<"input the depth:";
+        cin>>L;
+        R = L;
+        cout<<"search with depth "<<L<<endl;
+    }
+    for(int d=L;d<=R;d++){
         s.init();
         opt_path_len = 0;
         opt_path_len = s.dfStack(pos, d, opt_path);
