@@ -35,30 +35,19 @@ inline int num_bits(int x){
     return cnt;
 }
 
-class visit_seq_scheduler{
-    public:
-        visit_seq_scheduler(){};
-        void sort_seq(MoveList<All, Black>, Position pos);
-        bool cmp_move(const Move& move1, const Move& move2);
-
-
-    private:
-        int min_step_estimate(Position pos);
-        Position base_position;
-};
-
-
-
 class solver{
     public:
+        map<string, int> visited_states;
+        int visit_cnt;
+        void record(Position pos, int depth_limit);
+        bool is_visited(Position pos, int depth_limit);
+        
         solver();
-        ~solver();
         void init(bool clear_visited_states = false);
             
         //approximate the lower bound of moves to finish the pos
+        int min_step_estimate(Position pos);
         bool dfStack(Position pos, int limit_depth, Move* moves);
-    // private:
-        visit_seq_scheduler* seq_scheduler;
 };
 
 void resolve(Position &pos);

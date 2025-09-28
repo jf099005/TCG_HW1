@@ -1,0 +1,173 @@
+#include "solver.h"
+
+typedef pair<int, Move> weighted_move;
+
+void solver::record(Position pos, int depth_limit){
+    visited_states[ pos.toFEN() ] = depth_limit;
+}
+
+bool solver::is_visited(Position pos, int depth_limit){
+    if( visited_states.find(pos.toFEN()) == visited_states.end() ){
+        return false;
+    }
+    else{
+        return visited_states[pos.toFEN()] >= depth_limit; 
+    }
+}
+
+solver::solver()
+{};
+
+void solver::init(bool clear_visited_states){
+    visit_cnt = 0;
+    if(clear_visited_states){
+            visited_states.clear();
+    }
+}
+
+        //dfs of non-revursion version
+        //return the path length
+
+int solver::dfStack(Position start_pos, int limit_depth, Move* moves){
+    if(start_pos.winner() == Black){
+        return 0;
+    }
+    init();
+    stack<Move> search_space;
+    //top is the number of members of current stack top of the current top of search_space
+    stack<int> layer_cnt;
+    //top is the root(previous state) of the current stack top of search_space
+    stack<Position> prv_position;
+    
+
+    
+    prv_position.push(start_pos);
+    MoveList<All, Black> first_moves(start_pos);
+    layer_cnt.push(first_moves.size());
+
+    for(int i=0; i<first_moves.size(); i++){
+        search_space.push( first_moves[i] );
+        if(USE_DEBUG){
+            debug <<"first move:" << first_moves[i] <<endl;
+            debug << "logic:" << (first_moves[i].to() == SQ_B3) <<endl;
+        }
+    }
+    
+    while(!search_space.empty()){
+        if(layer_cnt.top() == 0){
+            layer_cnt.pop();
+            prv_position.pop();
+            continue;
+        }
+
+        Move action_cur = search_space.top();
+        search_space.pop();
+        layer_cnt.top()--;
+
+        visit_cnt++;
+
+        Position current_pos = prv_position.top();
+        current_pos.do_move( action_cur );
+
+        int depth = prv_position.size();
+
+        moves[depth-1] = action_cur;
+
+
+        if(USE_DEBUG){
+            for(int i=0;i<depth;i++){
+                debug << moves[i]<<" / ";
+            }
+            debug << endl;
+        }
+
+        if( current_pos.winner() == Black ){
+            return prv_position.size();
+        }
+        record(current_pos, limit_depth - depth);
+
+        if( depth < limit_depth){
+            MoveList<All, Black> nx_moves(current_pos);
+            
+            // search_space.push(END);
+            prv_position.push(current_pos);
+            layer_cnt.push(0);
+            for(int move_idx = 0; move_idx < nx_moves.size(); move_idx++){
+                Move nx_move = nx_moves[move_idx];
+                Position nx_state(current_pos);
+                nx_state.do_move(nx_move);
+                if(is_visited(nx_state, limit_depth - depth - 1)){
+                    continue;
+                }
+                search_space.push(nx_move);
+                layer_cnt.top()++;
+            }
+            if(layer_cnt.top() == 0){
+                layer_cnt.pop();
+                prv_position.pop();
+            }
+        }
+    }
+    return FAIL;
+}
+
+int solver::min_step_estimate(Position pos){
+    int pieces = pos.pieces(Red);
+    return num_bits(pieces);
+}
+
+bool solver::dfs(Position pos, int limit_depth, Move* moves, int &depth){
+    
+    if(limit_depth < 0){
+        return false;
+    }
+    if( pos.winner() == Black ){
+        return true;
+    }
+    if(USE_DEBUG){
+        debug << "visit state "<< pos << "of depth " << depth<<endl;
+        string x;
+        getline(cin, x);
+    }
+    if( is_visited(pos, limit_depth) ){
+        return false;
+    }
+    record( pos, limit_depth );
+    visit_cnt++;
+
+    MoveList<All, Black> nx_moves(pos);
+
+    weighted_move nx_moves_with_weight[ nx_moves.size() ];
+    for(int i=0; i<nx_moves.size(); i++){
+        Move nx_move = nx_moves[i];
+        Position nx_state( pos.toFEN() );
+        nx_state.do_move(nx_move);
+
+        nx_moves_with_weight[i] =  weighted_move(min_step_estimate(nx_state), nx_move);
+    }
+    
+    sort(nx_moves_with_weight, nx_moves_with_weight + nx_moves.size());
+
+    depth++;
+    for(int move_idx = 0; move_idx < nx_moves.size(); move_idx++){
+        // Move nx_move = nx_moves[move_idx];
+        Move nx_move = nx_moves_with_weight[move_idx].second;
+        moves[depth-1] = nx_move;
+        Position nx_state( pos.toFEN() );
+        nx_state.do_move(nx_move);
+
+        // if( visited_states.count( encode_board(nx_state, ) )  )
+        //     continue;
+        if(is_visited(nx_state, limit_depth)){
+            continue;
+        }
+
+        bool solution = dfs(nx_state, limit_depth-1, moves, depth);
+        if(solution){
+            return true;
+        }
+    }
+    depth--;
+    return false;
+}
+

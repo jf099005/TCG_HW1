@@ -27,10 +27,9 @@ void resolve(Position &pos)
     
     if(USE_DEBUG){
         debug << pos <<endl;
-        debug << "step estimation:" << s.min_step_estimate(pos) <<endl;
         debug<<"start DFS\n";
     }
-    int opt_path_len = 0;
+    int opt_path_len = -1;
     int L=0, R=30;
     if(USE_DEBUG){
         cout<<"input the depth:";
@@ -39,24 +38,11 @@ void resolve(Position &pos)
         cout<<"search with depth "<<L<<endl;
     }
     for(int d=L;d<=R;d++){
-        s.init();
-        opt_path_len = 0;
-        opt_path_len = s.dfStack(pos, d, opt_path);
-        if(opt_path_len != FAIL){
+        bool result = s.dfStack(pos, d, opt_path);
+        if(result){
+            opt_path_len = d;
             break;
         }
-        // bool status = s.dfs(pos, d, opt_path, opt_path_len);
-        // if(!status){
-        //     if(USE_DEBUG)
-        //         debug<<"fail at depth "<<d<<endl;
-        //     continue;
-        // }
-        // if(USE_DEBUG){
-        //     debug<<"visit cnt:" << s.visit_cnt<<endl;
-        //     debug<<  "movelen:" << opt_path_len <<endl;
-        //     debug << "DFS:\n";
-        // }
-        // break;
     }
 
 
