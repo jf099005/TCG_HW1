@@ -26,47 +26,31 @@ void resolve(Position &pos)
     solver s;
     
     if(USE_DEBUG){
+        debug << pos <<endl;
         debug << "step estimation:" << s.min_step_estimate(pos) <<endl;
         debug<<"start DFS\n";
-
     }
     int opt_path_len = 0;
-    // for(int d=1;d<=30;d++){
-    //     s.init();
-    //     opt_path_len = 0;
-    //     bool status = s.dfs(pos, d, opt_path, opt_path_len);
-    //     if(!status){
-    //         if(USE_DEBUG)
-    //             debug<<"fail at depth "<<d<<endl;
-    //         continue;
-    //     }
-    //     if(USE_DEBUG){
-    //         debug<<"visit cnt:" << s.visit_cnt<<endl;
-    //         debug<<  "movelen:" << opt_path_len <<endl;
-    //         debug << "DFS:\n";
-    //     }
-    //     break;
-    // }
+    int L=0, R=30;
     for(int d=1;d<=30;d++){
         s.init();
-        // opt_path_len = 0;
-        if(USE_DEBUG){
-            debug << "try depth "<<d<<endl;
-        }
+        opt_path_len = 0;
         opt_path_len = s.dfStack(pos, d, opt_path);
-        if(opt_path_len == FAIL){
-            if(USE_DEBUG){
-                debug<<"fail at depth "<<d<<endl;
-                debug << "visited nodes:" << s.visit_cnt<<endl;
-            }
-            continue;
+        if(opt_path_len != FAIL){
+            break;
         }
-        if(USE_DEBUG){
-            debug<<"visit cnt:" << s.visit_cnt<<endl;
-            debug<<  "movelen:" << opt_path_len <<endl;
-            debug << "DFS:\n";
-        }
-        break;
+        // bool status = s.dfs(pos, d, opt_path, opt_path_len);
+        // if(!status){
+        //     if(USE_DEBUG)
+        //         debug<<"fail at depth "<<d<<endl;
+        //     continue;
+        // }
+        // if(USE_DEBUG){
+        //     debug<<"visit cnt:" << s.visit_cnt<<endl;
+        //     debug<<  "movelen:" << opt_path_len <<endl;
+        //     debug << "DFS:\n";
+        // }
+        // break;
     }
 
 

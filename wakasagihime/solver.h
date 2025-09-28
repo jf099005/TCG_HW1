@@ -14,7 +14,7 @@
 #include<map>
 #include <chrono>
 #define max_path_length 100
-#define FAIL (-1)
+#define FAIL (114514)
 
 
 #define USE_DEBUG true

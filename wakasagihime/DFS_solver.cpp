@@ -19,27 +19,27 @@ solver::solver()
 {};
 
 void solver::init(bool clear_visited_states){
-    this->visit_cnt = 0;
+    visit_cnt = 0;
     if(clear_visited_states){
-            this->visited_states.clear();
+            visited_states.clear();
     }
 }
 
         //dfs of non-revursion version
         //return the path length
 
-int solver::dfStack(Position pos, int limit_depth, Move* moves){
+int solver::dfStack(Position start_pos, int limit_depth, Move* moves){
     init();
-    int depth = 0;
     stack<Move> search_space;
     //top is the number of members of current stack top of the current top of search_space
     stack<int> layer_cnt;
     //top is the root(previous state) of the current stack top of search_space
     stack<Position> prv_position;
     
+
     
-    prv_position.push(pos);
-    MoveList<All, Black> first_moves(pos);
+    prv_position.push(start_pos);
+    MoveList<All, Black> first_moves(start_pos);
     layer_cnt.push(first_moves.size());
 
     for(int i=0; i<first_moves.size(); i++){
@@ -50,7 +50,6 @@ int solver::dfStack(Position pos, int limit_depth, Move* moves){
         if(layer_cnt.top() == 0){
             layer_cnt.pop();
             prv_position.pop();
-            depth--;
         }
 
         Move action_cur = search_space.top();
@@ -61,37 +60,34 @@ int solver::dfStack(Position pos, int limit_depth, Move* moves){
 
         Position current_pos = prv_position.top();
         current_pos.do_move( action_cur );
+        
+        moves[prv_position.size()-1] = action_cur;
 
         if( current_pos.winner() == Black ){
-            return depth;
+            return prv_position.size();
         }
+        // record(current_pos, limit_depth - depth);
 
-        if(depth >= limit_depth){
-            continue;
-        }
-
-        record(current_pos, limit_depth - depth);
-        MoveList<All, Black> nx_moves(current_pos);
-        
-        // search_space.push(END);
-        prv_position.push(current_pos);
-        layer_cnt.push(0);
-        for(int move_idx = 0; move_idx < nx_moves.size(); move_idx++){
-            Move nx_move = nx_moves[move_idx];
-            Position nx_state(pos);
-            nx_state.do_move(nx_move);
-            if(is_visited(nx_state, limit_depth - depth)){
-                continue;
+        if(prv_position.size() < limit_depth){
+            MoveList<All, Black> nx_moves(current_pos);
+            
+            // search_space.push(END);
+            prv_position.push(current_pos);
+            layer_cnt.push(0);
+            for(int move_idx = 0; move_idx < nx_moves.size(); move_idx++){
+                Move nx_move = nx_moves[move_idx];
+                Position nx_state(current_pos);
+                nx_state.do_move(nx_move);
+                // if(is_visited(nx_state, limit_depth - depth)){
+                //     continue;
+                // }
+                search_space.push(nx_move);
+                layer_cnt.top()++;
             }
-            search_space.push(nx_move);
-            layer_cnt.top()++;
-        }
-        if(layer_cnt.top() == 0){
-            layer_cnt.pop();
-            prv_position.pop();
-        }
-        else{
-            depth++;
+            if(layer_cnt.top() == 0){
+                layer_cnt.pop();
+                prv_position.pop();
+            }
         }
     }
     return FAIL;
