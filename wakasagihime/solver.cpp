@@ -28,24 +28,20 @@ void resolve(Position &pos)
 
     auto start = high_resolution_clock::now();
     Move opt_path[MAX_MOVE_NUM];
-    solver s;
+    solver s(pos);
     
     if(OUTPUT_BOARD){
         debug << pos <<endl;
-        visit_seq_scheduler s;
         debug <<"num of C:" <<pos.count(Black, Chariot) <<endl;
-        debug << "min step estimate:" << s.min_step_estimate(pos) <<endl;
+        debug << "min step estimate:" << s.seq_scheduler->min_step_estimate(pos) <<endl;
     }
     int opt_path_len = -1;
     int L=0, R=30;
-    if(USE_DEBUG){
-        cout<<"input the depth:";
-        cin>>L;
-        R = L;
-        cout<<"search with depth "<<L<<endl;
-    }
     for(int d=L;d<=R;d++){
         bool result = s.dfStack(pos, d, opt_path);
+        if(OUTPUT_BOARD){
+            debug << "search with depth " << d <<"..." <<endl;
+        }
         if(result){
             opt_path_len = d;
             break;

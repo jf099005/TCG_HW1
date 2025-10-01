@@ -61,20 +61,30 @@ inline bool at_right_boundary(Square sq){
 
 class visit_seq_scheduler{
     public:
-        visit_seq_scheduler(){};
+        visit_seq_scheduler(Position pos);
         void sort_seq(MoveList<All, Black>& visit_seq, Position pos);
-        bool cmp_move(const Move& move1, const Move& move2);
-
-
-    // private:
-        int min_step_estimate(Position pos);
+        bool cmp_move(const Move& move1, const Move& move2) const;
+        int min_step_estimate(Position pos) const;
+        void calculate_shortest_path();
+        inline int shortest_path(Square a, Square b) const{
+            return _shortest_path[a*SQUARE_NB + b];
+        }
+    private:
         Position base_position;
-};
+        int _shortest_path[SQUARE_NB*SQUARE_NB];
+        inline int represent(Square a, Square b){
+            return a*SQUARE_NB + b;
+        }
+        inline int represent(int a, int b){
+            return a*SQUARE_NB + b;
+        }
 
+        int min_route_estimate(Position pos) const;
+};
 
 class solver{
     public:
-        solver();
+        solver(Position base_pos);
         ~solver();
         void init(bool clear_visited_states = false);
             
@@ -83,4 +93,5 @@ class solver{
     // private:
         visit_seq_scheduler* seq_scheduler;
 };
+
 #endif

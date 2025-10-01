@@ -4,7 +4,68 @@
 
 typedef pair<int, Move> weighted_move;
 
-bool visit_seq_scheduler::cmp_move(const Move& move1, const Move& move2){
+visit_seq_scheduler::visit_seq_scheduler(Position pos):
+    base_position(pos)
+{
+    calculate_shortest_path();
+};
+
+
+void visit_seq_scheduler::calculate_shortest_path(){
+    //dis[i,j] = shortest_path[i*SQUARE_NB + j]
+    static const int inf = 100;
+    // static const Direction main_directions[] = {EAST, WEST, NORTH, SOUTH};
+
+    for(int i=0; i< SQUARE_NB*SQUARE_NB; i++){
+        _shortest_path[i] = inf;
+    }
+    for(int i=0; i<SQUARE_NB; i++){
+        Square sq_i = Square(i);
+        if(base_position.peek_piece_at(sq_i).type == Duck){
+            continue;
+        }
+        _shortest_path[represent(i,i)] = 0;
+        if(!at_left_boundary(sq_i)){
+            Square sq_iL = sq_i + WEST;
+            if( base_position.peek_piece_at(sq_iL).type != Duck ){
+                _shortest_path[represent(sq_i, sq_iL)] = 1;
+            }
+        }
+
+        if(!at_right_boundary(sq_i)){
+            Square sq_iL = sq_i + EAST;
+            if( base_position.peek_piece_at(sq_iL).type != Duck ){
+                _shortest_path[represent(sq_i, sq_iL)] = 1;
+            }
+        }
+
+        if(!at_upper_boundary(sq_i)){
+            Square sq_iL = sq_i + SOUTH;
+            if( base_position.peek_piece_at(sq_iL).type != Duck ){
+                _shortest_path[represent(sq_i, sq_iL)] = 1;
+            }
+        }
+
+        if(!at_lower_boundary(sq_i)){
+            Square sq_iL = sq_i + NORTH;
+            if( base_position.peek_piece_at(sq_iL).type != Duck ){
+                _shortest_path[represent(sq_i, sq_iL)] = 1;
+            }
+        }
+    }
+
+    for(int c=0; c<SQUARE_NB; c++){
+        for(int b=0; b<SQUARE_NB; b++){
+            for(int a=0; a<SQUARE_NB; a++){
+                int path_len = _shortest_path[represent(a, c)] + _shortest_path[represent(c, b)];
+                _shortest_path[represent(a, b)] = min( _shortest_path[represent(a, b)], path_len);
+            }
+        }
+    }
+
+}
+
+bool visit_seq_scheduler::cmp_move(const Move& move1, const Move& move2) const{
     Position pos1(base_position), pos2(base_position);
     pos1.do_move(move1);
     pos2.do_move(move2);
@@ -39,19 +100,7 @@ int rough_estimate(Position pos){
     return num_bits(pieces);
 }
 
-
-void calculate_shortest_path(Position& pos, int* shortest_path){
-    //dis[i,j] = shortest_path[i*SQUARE_NB + j]
-    static const int inf = 100;
-    for(int i=0; i< SQUARE_NB*SQUARE_NB; i++){
-        shortest_path[i] = inf;
-    }
-    for(int i=0; i<SQUARE_NB; i++){
-        shortest_path[i*SQUARE_NB + i] = 0;
-    }
-}
-
-int min_route_estimate(Position pos){
+int visit_seq_scheduler::min_route_estimate(Position pos) const{
     int total_dis[1000];
     int dis_cnt = 0;
     int num_red = num_bits(pos.pieces(Red));
@@ -85,7 +134,7 @@ int min_route_estimate(Position pos){
                 continue;
             }
 
-            int piece_distance = distance<Square> (sq_a, sq_b);
+            int piece_distance = shortest_path(sq_a, sq_b);//distance<Square> (sq_a, sq_b);
 
             if(a.type == Chariot){
                 piece_distance = 2 - (sq_a%8 == sq_b%8) - (sq_a/8 == sq_b/8);
@@ -109,14 +158,14 @@ int min_route_estimate(Position pos){
     return move_estimate;
 }
 
-int visit_seq_scheduler::min_step_estimate(Position pos){
+int visit_seq_scheduler::min_step_estimate(Position pos) const{
     return min_route_estimate(pos);
 }
 
 
-solver::solver()
+solver::solver(Position base_pos)
 {
-    seq_scheduler = new visit_seq_scheduler();
+    seq_scheduler = new visit_seq_scheduler(base_pos);
 };
 
 
