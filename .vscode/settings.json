@@ -49,6 +49,25 @@
         "format": "cpp",
         "__bit_reference": "cpp",
         "map": "cpp",
-        "set": "cpp"
+        "set": "cpp",
+        "cstdarg": "cpp",
+        "atomic": "cpp",
+        "charconv": "cpp",
+        "condition_variable": "cpp",
+        "iterator": "cpp",
+        "memory": "cpp",
+        "memory_resource": "cpp",
+        "random": "cpp",
+        "ratio": "cpp",
+        "iomanip": "cpp",
+        "mutex": "cpp",
+        "semaphore": "cpp",
+        "span": "cpp",
+        "stop_token": "cpp",
+        "thread": "cpp",
+        "variant": "cpp",
+        "__nullptr": "cpp",
+        "queue": "cpp",
+        "stack": "cpp"
     }
 }

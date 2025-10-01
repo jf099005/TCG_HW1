@@ -1,6 +1,10 @@
 #include "solver.h"
 #include "lib/helper.h"
+#include "IDS_solver/DFS_solver.h"
+#include <chrono>
+#define OUTPUT_BOARD true
 using namespace std::chrono;
+
 /*
  * Wakasagi will call this and only this function.
  * Below you will find examples of functions you might use
@@ -18,16 +22,22 @@ using namespace std::chrono;
 // bool is_cycle_move(){
     
 // }
+
 void resolve(Position &pos)
 {
 
     auto start = high_resolution_clock::now();
-    Move opt_path[100];
+    Move opt_path[MAX_MOVE_NUM];
     solver s;
     
-    if(USE_DEBUG){
+    if(OUTPUT_BOARD){
         debug << pos <<endl;
-        debug<<"start DFS\n";
+        visit_seq_scheduler s;
+        debug <<"num of C:" <<pos.count(Black, Chariot) <<endl;
+        debug << "min step estimate:" << s.min_step_estimate(pos) <<endl;
+        for(auto ps: BoardView(pos.pieces())){
+            debug <<ps<<", vs C: " <<(Chariot > pos.peek_piece_at(ps).type) <<endl;
+        }
     }
     int opt_path_len = -1;
     int L=0, R=30;
