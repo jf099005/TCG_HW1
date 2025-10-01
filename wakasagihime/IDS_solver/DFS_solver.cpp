@@ -191,7 +191,7 @@ bool solver::dfStack(Position start_pos, int limit_depth, Move* moves){
             debug << endl;
         }
 
-        if( current_pos.winner() == Black ){
+        if( current_pos.winner() == Black and depth <= limit_depth){
             return true;
         }
         // record(current_pos, limit_depth - depth);

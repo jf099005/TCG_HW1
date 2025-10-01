@@ -35,9 +35,6 @@ void resolve(Position &pos)
         visit_seq_scheduler s;
         debug <<"num of C:" <<pos.count(Black, Chariot) <<endl;
         debug << "min step estimate:" << s.min_step_estimate(pos) <<endl;
-        for(auto ps: BoardView(pos.pieces())){
-            debug <<ps<<", vs C: " <<(Chariot > pos.peek_piece_at(ps).type) <<endl;
-        }
     }
     int opt_path_len = -1;
     int L=0, R=30;
