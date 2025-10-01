@@ -1,5 +1,5 @@
 #include "DFS_solver.h"
-
+#include<cassert>
 
 
 typedef pair<int, Move> weighted_move;
@@ -40,22 +40,68 @@ int rough_estimate(Position pos){
 }
 
 
-void calculate_shortest_path(Position& pos, int* shortest_path){
+void visit_seq_scheduler::calculate_shortest_path(){
     //dis[i,j] = shortest_path[i*SQUARE_NB + j]
     static const int inf = 100;
+    // static const Direction main_directions[] = {EAST, WEST, NORTH, SOUTH};
+
     for(int i=0; i< SQUARE_NB*SQUARE_NB; i++){
-        shortest_path[i] = inf;
+        _shortest_path[i] = inf;
     }
     for(int i=0; i<SQUARE_NB; i++){
-        shortest_path[i*SQUARE_NB + i] = 0;
+        Square sq_i = Square(i);
+        if(base_position.peek_piece_at(sq_i).type == Duck){
+            continue;
+        }
+        _shortest_path[represent(i,i)] = 0;
+        if(!at_left_boundary(sq_i)){
+            Square sq_iL = sq_i + WEST;
+            if( base_position.peek_piece_at(sq_iL).type != Duck ){
+                _shortest_path[represent(sq_i, sq_iL)] = 1;
+            }
+        }
+
+        if(!at_right_boundary(sq_i)){
+            Square sq_iL = sq_i + EAST;
+            if( base_position.peek_piece_at(sq_iL).type != Duck ){
+                _shortest_path[represent(sq_i, sq_iL)] = 1;
+            }
+        }
+
+        if(!at_upper_boundary(sq_i)){
+            Square sq_iL = sq_i + SOUTH;
+            if( base_position.peek_piece_at(sq_iL).type != Duck ){
+                _shortest_path[represent(sq_i, sq_iL)] = 1;
+            }
+        }
+
+        if(!at_lower_boundary(sq_i)){
+            Square sq_iL = sq_i + NORTH;
+            if( base_position.peek_piece_at(sq_iL).type != Duck ){
+                _shortest_path[represent(sq_i, sq_iL)] = 1;
+            }
+        }
     }
+
+    for(int a=0; a<SQUARE_NB; a++){
+        for(int b=0; b<SQUARE_NB; b++){
+            for(int c=0; c<SQUARE_NB; c++){
+                int path_len = _shortest_path[represent(a, c)] + _shortest_path[represent(c, b)];
+                _shortest_path[represent(a, b)] = min( _shortest_path[represent(a, b)], path_len);
+            }
+        }
+    }
+
 }
 
 int min_route_estimate(Position pos){
-    int total_dis[1000];
+    static int total_dis[1000];
     int dis_cnt = 0;
     int num_red = num_bits(pos.pieces(Red));
-
+    if(num_red == 0){
+        return 0;
+    }
+    assert(num_red < 32);
     auto all_pieces = BoardView(pos.pieces());
 
     // int shortest_path[SQUARE_NB* SQUARE_NB];
@@ -81,7 +127,7 @@ int min_route_estimate(Position pos){
                 swap(a,b);
             }
 
-            if(b.type > a.type and b.type != a.type){
+            if(!(a.type > b.type)){
                 continue;
             }
 
@@ -95,11 +141,15 @@ int min_route_estimate(Position pos){
                              Chariot > a.type and Chariot > b.type){
                 piece_distance = 2 - (sq_a%8 == sq_b%8) - (sq_a/8 == sq_b/8);
             }
-
+            assert(dis_cnt < 100);
             total_dis[dis_cnt++] = piece_distance;
         }
     }
-
+    if(dis_cnt <= 0){
+        debug << "ERROR: call min_route_cnt at dis_cnt == 0";
+        debug << pos <<endl;
+        abort;
+    };
     sort(total_dis, total_dis + dis_cnt);
     int move_estimate = 0;
     for(int i=0; i<num_red; i++){
@@ -147,10 +197,13 @@ bool solver::dfStack(Position start_pos, int limit_depth, Move* moves){
     if(start_pos.winner() == Black){
         return true;
     }
+    if(limit_depth == 0){
+        return false;
+    }
     stack<Move> search_space;
     //top is the number of members of current stack top of the current top of search_space
-    int layer_cnt[MAX_MOVE_NUM];
-    Position prv_positions[MAX_MOVE_NUM];
+    static int layer_cnt[MAX_MOVE_NUM];
+    static Position prv_positions[MAX_MOVE_NUM];
     
     //top is the root(previous state) of the current stack top of search_space
     
@@ -169,6 +222,9 @@ bool solver::dfStack(Position start_pos, int limit_depth, Move* moves){
     //layer[d-1]: number of node at Depth = d
     //prv_positions[d]: state at Depth = d
     while(!search_space.empty()){
+
+        assert(depth > 0);
+        assert(depth <= limit_depth);
         if(layer_cnt[depth-1] == 0){
             depth--;
             continue;
@@ -201,7 +257,6 @@ bool solver::dfStack(Position start_pos, int limit_depth, Move* moves){
             
             seq_scheduler->sort_seq(nx_moves, current_pos);
 
-            // search_space.push(END);
             prv_positions[depth] = (current_pos);
             layer_cnt[depth] = 0; // initialize cnt for layer depth+1
             for(int move_idx = 0; move_idx < nx_moves.size(); move_idx++){
@@ -231,6 +286,7 @@ bool solver::dfStack(Position start_pos, int limit_depth, Move* moves){
             }
             if(layer_cnt[depth] > 0){
                 depth++;
+                layer_cnt[depth] = 0;
             }
         }
     }

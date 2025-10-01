@@ -64,11 +64,20 @@ class visit_seq_scheduler{
         visit_seq_scheduler(){};
         void sort_seq(MoveList<All, Black>& visit_seq, Position pos);
         bool cmp_move(const Move& move1, const Move& move2);
-
-
-    // private:
         int min_step_estimate(Position pos);
+        void calculate_shortest_path();
+        inline int shortest_path(Square a, Square b){
+            return _shortest_path[a*SQUARE_NB + b];
+        }
+    private:
         Position base_position;
+        int _shortest_path[SQUARE_NB*SQUARE_NB];
+        inline int represent(Square a, Square b){
+            return a*SQUARE_NB + b;
+        }
+        inline int represent(int a, int b){
+            return a*SQUARE_NB + b;
+        }
 };
 
 
