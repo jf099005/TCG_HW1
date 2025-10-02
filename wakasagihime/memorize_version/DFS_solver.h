@@ -5,11 +5,11 @@
 #ifndef SOLVER_H
 #define SOLVER_H
 
-#include "lib/cdc.h"
-#include "lib/chess.h"
-#include "lib/helper.h"
-#include "lib/movegen.h"
-#include "lib/types.h"
+#include "../lib/cdc.h"
+#include "../lib/chess.h"
+#include "../lib/helper.h"
+#include "../lib/movegen.h"
+#include "../lib/types.h"
 #include<stack>
 #include<map>
 #include <chrono>
@@ -42,14 +42,14 @@ class solver{
         void record(Position pos, int depth_limit);
         bool is_visited(Position pos, int depth_limit);
         
-        solver();
+        solver(Position pos);
+        ~solver();
         void init(bool clear_visited_states = false);
-            
+        
         //approximate the lower bound of moves to finish the pos
         int min_step_estimate(Position pos);
         bool dfStack(Position pos, int limit_depth, Move* moves);
+        bool dfs(Position pos, int limit_depth, Move* moves, int &depth);
 };
-
-void resolve(Position &pos);
 
 #endif

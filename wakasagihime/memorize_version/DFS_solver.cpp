@@ -1,4 +1,4 @@
-#include "solver.h"
+#include "DFS_solver.h"
 
 typedef pair<int, Move> weighted_move;
 
@@ -15,8 +15,10 @@ bool solver::is_visited(Position pos, int depth_limit){
     }
 }
 
-solver::solver()
+solver::solver(Position pos)
 {};
+solver::~solver() = default;
+
 
 void solver::init(bool clear_visited_states){
     visit_cnt = 0;
@@ -28,7 +30,7 @@ void solver::init(bool clear_visited_states){
         //dfs of non-revursion version
         //return the path length
 
-int solver::dfStack(Position start_pos, int limit_depth, Move* moves){
+bool solver::dfStack(Position start_pos, int limit_depth, Move* moves){
     if(start_pos.winner() == Black){
         return 0;
     }
@@ -82,7 +84,7 @@ int solver::dfStack(Position start_pos, int limit_depth, Move* moves){
         }
 
         if( current_pos.winner() == Black ){
-            return prv_position.size();
+            return true;
         }
         record(current_pos, limit_depth - depth);
 
@@ -108,7 +110,7 @@ int solver::dfStack(Position start_pos, int limit_depth, Move* moves){
             }
         }
     }
-    return FAIL;
+    return false;
 }
 
 int solver::min_step_estimate(Position pos){

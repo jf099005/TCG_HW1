@@ -10,11 +10,8 @@ visit_seq_scheduler::visit_seq_scheduler(Position pos):
     calculate_shortest_path();
 };
 
-
 void visit_seq_scheduler::calculate_shortest_path(){
-    //dis[i,j] = shortest_path[i*SQUARE_NB + j]
     static const int inf = 100;
-    // static const Direction main_directions[] = {EAST, WEST, NORTH, SOUTH};
 
     for(int i=0; i< SQUARE_NB*SQUARE_NB; i++){
         _shortest_path[i] = inf;

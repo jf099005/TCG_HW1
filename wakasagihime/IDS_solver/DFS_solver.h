@@ -4,6 +4,7 @@
 #define max_path_length 100
 #define FAIL (-1)
 
+#define MEMORIZE_IN_SEARCH 1
 
 #include "../lib/cdc.h"
 #include "../lib/chess.h"
@@ -78,7 +79,6 @@ class visit_seq_scheduler{
         inline int represent(int a, int b){
             return a*SQUARE_NB + b;
         }
-
         int min_route_estimate(Position pos) const;
 };
 
@@ -87,11 +87,12 @@ class solver{
         solver(Position base_pos);
         ~solver();
         void init(bool clear_visited_states = false);
-            
+        
         //approximate the lower bound of moves to finish the pos
         bool dfStack(Position pos, int limit_depth, Move* moves);
     // private:
         visit_seq_scheduler* seq_scheduler;
+        map<string, int> visited_seq;
 };
 
 #endif

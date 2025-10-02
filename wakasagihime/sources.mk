@@ -6,4 +6,4 @@
 CHINESE = 1
 
 # +-- Add your own sources here, if any --+
-ADD_SOURCES = solver.cpp IDS_solver/DFS_solver.cpp
+ADD_SOURCES = solver.cpp memorize_version/DFS_solver.cpp
