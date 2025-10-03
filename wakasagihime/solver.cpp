@@ -43,7 +43,7 @@ void resolve(Position &pos)
         if(OUTPUT_BOARD){
             debug << "search with depth " << d <<"..." <<endl;
         }
-        bool result = s.dfStack(pos, d, opt_path);
+        bool result = s.IDS(pos, d, opt_path);
         if(result){
             opt_path_len = d;
             break;
