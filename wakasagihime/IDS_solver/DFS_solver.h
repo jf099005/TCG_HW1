@@ -1,9 +1,6 @@
 #ifndef DFS_SOLVER_H
 #define DFS_SOLVER_H
 
-#define max_path_length 100
-#define FAIL (-1)
-
 #define MEMORIZE_IN_SEARCH 1
 
 #include "../lib/cdc.h"
@@ -14,8 +11,7 @@
 #include<stack>
 #include<map>
 #define USE_DEBUG false
-#define MAX_MOVE_NUM 100
-
+#define MAX_MOVE_NUM 40
 
 using namespace std;
 
@@ -59,7 +55,6 @@ inline bool at_right_boundary(Square sq){
 //             at_upper_boundary(sq) || at_lower_boundary(sq);
 // }
 
-
 class visit_seq_scheduler{
     public:
         visit_seq_scheduler(Position pos);
@@ -72,15 +67,16 @@ class visit_seq_scheduler{
         }
     private:
         Position base_position;
-        int _shortest_path[SQUARE_NB*SQUARE_NB];
-        inline int represent(Square a, Square b){
+        short _shortest_path[SQUARE_NB*SQUARE_NB];
+        inline int represent(Square a, Square b) const{
             return a*SQUARE_NB + b;
         }
-        inline int represent(int a, int b){
+        inline int represent(int a, int b) const{
             return a*SQUARE_NB + b;
         }
         int min_route_estimate(Position pos) const;
 };
+
 
 class solver{
     public:
@@ -91,8 +87,13 @@ class solver{
         //approximate the lower bound of moves to finish the pos
         bool dfStack(Position pos, int limit_depth, Move* moves);
     // private:
+
+        map<string, short> visited_states;
+
+        int visit_cnt;
+        void record(Position pos, int depth_limit);
+        bool is_visited(Position pos, int depth_limit);
         visit_seq_scheduler* seq_scheduler;
-        map<string, int> visited_seq;
 };
 
 #endif

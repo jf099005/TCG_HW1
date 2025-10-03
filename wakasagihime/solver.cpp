@@ -39,10 +39,11 @@ void resolve(Position &pos)
     int opt_path_len = -1;
     int L=0, R=30;
     for(int d=L;d<=R;d++){
-        bool result = s.dfStack(pos, d, opt_path);
+        
         if(OUTPUT_BOARD){
             debug << "search with depth " << d <<"..." <<endl;
         }
+        bool result = s.dfStack(pos, d, opt_path);
         if(result){
             opt_path_len = d;
             break;

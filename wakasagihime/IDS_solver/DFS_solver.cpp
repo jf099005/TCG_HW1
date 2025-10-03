@@ -1,6 +1,6 @@
 #include "DFS_solver.h"
 
-
+#include<cassert>
 
 typedef pair<int, Move> weighted_move;
 
@@ -11,7 +11,7 @@ visit_seq_scheduler::visit_seq_scheduler(Position pos):
 };
 
 void visit_seq_scheduler::calculate_shortest_path(){
-    static const int inf = 100;
+    static const int inf = 40;
 
     for(int i=0; i< SQUARE_NB*SQUARE_NB; i++){
         _shortest_path[i] = inf;
@@ -54,7 +54,7 @@ void visit_seq_scheduler::calculate_shortest_path(){
     for(int c=0; c<SQUARE_NB; c++){
         for(int b=0; b<SQUARE_NB; b++){
             for(int a=0; a<SQUARE_NB; a++){
-                int path_len = _shortest_path[represent(a, c)] + _shortest_path[represent(c, b)];
+                short path_len = _shortest_path[represent(a, c)] + _shortest_path[represent(c, b)];
                 _shortest_path[represent(a, b)] = min( _shortest_path[represent(a, b)], path_len);
             }
         }
@@ -98,7 +98,7 @@ int rough_estimate(Position pos){
 }
 
 int visit_seq_scheduler::min_route_estimate(Position pos) const{
-    int total_dis[1000];
+    static short total_dis[1000];
     int dis_cnt = 0;
     int num_red = num_bits(pos.pieces(Red));
 
@@ -189,6 +189,27 @@ bool operator != (const Position& A, const Position& B){
 }
 
 
+void solver::init(bool clear_visited_states){
+    visit_cnt = 0;
+    if(clear_visited_states){
+            visited_states.clear();
+    }
+}
+
+void solver::record(Position pos, int depth_limit){
+    visited_states[ pos.toFEN() ] = depth_limit;
+}
+
+bool solver::is_visited(Position pos, int depth_limit){
+    if( visited_states.find(pos.toFEN()) == visited_states.end() ){
+        return false;
+    }
+    else{
+        return visited_states[pos.toFEN()] >= depth_limit; 
+    }
+}
+
+
 bool solver::dfStack(Position start_pos, int limit_depth, Move* moves){
     if(start_pos.winner() == Black){
         return true;
@@ -215,6 +236,10 @@ bool solver::dfStack(Position start_pos, int limit_depth, Move* moves){
     //layer[d-1]: number of node at Depth = d
     //prv_positions[d]: state at Depth = d
     while(!search_space.empty()){
+        assert(0< depth);
+        assert(search_space.size() > 0);
+        
+        // assert(depth <= limit_depth);
         if(layer_cnt[depth-1] == 0){
             depth--;
             continue;
@@ -240,7 +265,7 @@ bool solver::dfStack(Position start_pos, int limit_depth, Move* moves){
         if( current_pos.winner() == Black and depth <= limit_depth){
             return true;
         }
-        // record(current_pos, limit_depth - depth);
+        record(current_pos, limit_depth - depth);
 
         if( depth < limit_depth){
             MoveList<All, Black> nx_moves(current_pos);
@@ -254,6 +279,10 @@ bool solver::dfStack(Position start_pos, int limit_depth, Move* moves){
                 Move nx_move = nx_moves[move_idx];
                 Position nx_state(current_pos);
                 nx_state.do_move(nx_move);
+                if(is_visited(nx_state, limit_depth - depth - 1)){
+                    continue;
+                }
+
                 if(nx_state.winner() == Black){
                     moves[depth] = nx_move;
                     return true;

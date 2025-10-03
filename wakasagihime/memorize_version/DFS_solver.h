@@ -37,7 +37,7 @@ inline int num_bits(int x){
 
 class solver{
     public:
-        map<string, int> visited_states;
+        map<string, short> visited_states;
         int visit_cnt;
         void record(Position pos, int depth_limit);
         bool is_visited(Position pos, int depth_limit);
