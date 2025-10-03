@@ -3,83 +3,83 @@ Flat profile:
 Each sample counts as 0.01 seconds.
   %   cumulative   self              self     total           
  time   seconds   seconds    calls  ms/call  ms/call  name    
- 63.20      5.65     5.65 36357555     0.00     0.00  visit_seq_scheduler::min_route_estimate(Position const&) const
-  7.61      6.33     0.68 125556293     0.00     0.00  operator==(Position const&, Position const&)
-  6.38      6.90     0.57  4872273     0.00     0.00  visit_seq_scheduler::sort_arr(MoveList<(MoveType)3, (Color)0>&, Position&, int)
-  5.37      7.38     0.48 284724600     0.00     0.00  generate_moves(Color, PieceType, Position const&, Move*)
-  5.37      7.86     0.48       18    26.67   123.80  solver::dfStack(Position, int, Move*)
-  4.36      8.25     0.39 121431748     0.00     0.00  Position::subordinates(Color, PieceType) const
-  2.91      8.51     0.26 82459655     0.00     0.00  resolve(Position&)
-  1.68      8.66     0.15 136791289     0.00     0.00  attacks_bb(PieceType, Square, unsigned int)
-  1.01      8.75     0.09 35590575     0.00     0.00  Move* generate_all<(MoveType)3>(Color, Position const&, Move*)
-  0.89      8.83     0.08 41229812     0.00     0.00  Position::do_move(Move const&)
-  0.56      8.88     0.05 44459271     0.00     0.00  Position::remove_piece_at(Square)
-  0.34      8.91     0.03 41141215     0.00     0.00  Position::place_piece_at(Piece const&, Square)
-  0.22      8.93     0.02                             _init
-  0.11      8.94     0.01 20231424     0.00     0.00  Move* generate<(MoveType)3, (Color)0>(Position const&, PieceType, Move*)
-  0.00      8.94     0.00 15359151     0.00     0.00  Move* generate<(MoveType)3, (Color)1>(Position const&, PieceType, Move*)
-  0.00      8.94     0.00 15359151     0.00     0.00  Position::winner(WinCon*) const
-  0.00      8.94     0.00    32800     0.00     0.00  unsigned int sliding_attack<(PieceType)5>(Square, unsigned int)
-  0.00      8.94     0.00     3872     0.00     0.00  unsigned int sliding_attack<(PieceType)3>(Square, unsigned int)
-  0.00      8.94     0.00      681     0.00     0.00  Position::clear()
-  0.00      8.94     0.00      581     0.00     0.00  void init_magic<(PieceType)5>(unsigned int*, Magic*)
-  0.00      8.94     0.00      256     0.00     0.00  bool std::binary_search<__gnu_cxx::__normal_iterator<char const*, std::vector<char, std::allocator<char> > >, char>(__gnu_cxx::__normal_iterator<char const*, std::vector<char, std::allocator<char> > >, __gnu_cxx::__normal_iterator<char const*, std::vector<char, std::allocator<char> > >, char const&)
-  0.00      8.94     0.00      249     0.00     0.00  std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > std::__cxx11::regex_traits<char>::transform_primary<char const*>(char const*, char const*) const
-  0.00      8.94     0.00      249     0.00     0.00  __gnu_cxx::__normal_iterator<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const*, std::vector<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, std::allocator<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > > > > std::find<__gnu_cxx::__normal_iterator<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const*, std::vector<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, std::allocator<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > > > >, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > >(__gnu_cxx::__normal_iterator<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const*, std::vector<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, std::allocator<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > > > >, __gnu_cxx::__normal_iterator<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const*, std::vector<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, std::allocator<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > > > >, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&)
-  0.00      8.94     0.00      128     0.00     0.00  safe_destination(Square, int)
-  0.00      8.94     0.00       51     0.00     0.00  std::__detail::_Executor<__gnu_cxx::__normal_iterator<char const*, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > >, std::allocator<std::__cxx11::sub_match<__gnu_cxx::__normal_iterator<char const*, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > > > >, std::__cxx11::regex_traits<char>, true>::_M_dfs(std::__detail::_Executor<__gnu_cxx::__normal_iterator<char const*, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > >, std::allocator<std::__cxx11::sub_match<__gnu_cxx::__normal_iterator<char const*, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > > > >, std::__cxx11::regex_traits<char>, true>::_Match_mode, long)
-  0.00      8.94     0.00       49     0.00     0.00  std::_Function_handler<bool (char), std::__detail::_BracketMatcher<std::__cxx11::regex_traits<char>, false, false> >::_M_invoke(std::_Any_data const&, char&&)
-  0.00      8.94     0.00       40     0.00     0.00  std::__detail::_Compiler<std::__cxx11::regex_traits<char> >::_M_assertion()
-  0.00      8.94     0.00       34     0.00     0.00  operator<<(std::ostream&, Square const&)
-  0.00      8.94     0.00       26     0.00     0.00  std::__cxx11::regex_iterator<__gnu_cxx::__normal_iterator<char const*, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > >, char, std::__cxx11::regex_traits<char> >::operator==(std::__cxx11::regex_iterator<__gnu_cxx::__normal_iterator<char const*, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > >, char, std::__cxx11::regex_traits<char> > const&) const
-  0.00      8.94     0.00       18     0.00     0.00  _GLOBAL__sub_I_info
-  0.00      8.94     0.00       17     0.00     0.00  Piece::Piece(Color, PieceType)
-  0.00      8.94     0.00       17     0.00     0.00  std::_Deque_base<Move, std::allocator<Move> >::~_Deque_base()
-  0.00      8.94     0.00       17     0.00     0.00  operator<<(std::ostream&, Move const&)
-  0.00      8.94     0.00       15     0.00     0.00  std::__cxx11::regex_token_iterator<__gnu_cxx::__normal_iterator<char const*, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > >, char, std::__cxx11::regex_traits<char> >::regex_token_iterator(std::__cxx11::regex_token_iterator<__gnu_cxx::__normal_iterator<char const*, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > >, char, std::__cxx11::regex_traits<char> > const&)
-  0.00      8.94     0.00       12     0.00     0.00  std::__cxx11::regex_token_iterator<__gnu_cxx::__normal_iterator<char const*, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > >, char, std::__cxx11::regex_traits<char> >::operator==(std::__cxx11::regex_token_iterator<__gnu_cxx::__normal_iterator<char const*, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > >, char, std::__cxx11::regex_traits<char> > const&) const
-  0.00      8.94     0.00       11     0.00     0.00  std::vector<std::__cxx11::sub_match<__gnu_cxx::__normal_iterator<char const*, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > > >, std::allocator<std::__cxx11::sub_match<__gnu_cxx::__normal_iterator<char const*, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > > > > >::_M_fill_assign(unsigned long, std::__cxx11::sub_match<__gnu_cxx::__normal_iterator<char const*, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > > > const&)
-  0.00      8.94     0.00        9     0.00     0.00  bool std::__detail::__regex_algo_impl<__gnu_cxx::__normal_iterator<char const*, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > >, std::allocator<std::__cxx11::sub_match<__gnu_cxx::__normal_iterator<char const*, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > > > >, char, std::__cxx11::regex_traits<char> >(__gnu_cxx::__normal_iterator<char const*, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > >, __gnu_cxx::__normal_iterator<char const*, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > >, std::__cxx11::match_results<__gnu_cxx::__normal_iterator<char const*, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > >, std::allocator<std::__cxx11::sub_match<__gnu_cxx::__normal_iterator<char const*, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > > > > >&, std::__cxx11::basic_regex<char, std::__cxx11::regex_traits<char> > const&, std::regex_constants::match_flag_type, std::__detail::_RegexExecutorPolicy, bool)
-  0.00      8.94     0.00        7     0.00     0.00  std::__detail::_Executor<__gnu_cxx::__normal_iterator<char const*, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > >, std::allocator<std::__cxx11::sub_match<__gnu_cxx::__normal_iterator<char const*, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > > > >, std::__cxx11::regex_traits<char>, true>::_M_rep_once_more(std::__detail::_Executor<__gnu_cxx::__normal_iterator<char const*, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > >, std::allocator<std::__cxx11::sub_match<__gnu_cxx::__normal_iterator<char const*, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > > > >, std::__cxx11::regex_traits<char>, true>::_Match_mode, long)
-  0.00      8.94     0.00        6     0.00     0.00  void std::vector<Piece, std::allocator<Piece> >::_M_realloc_insert<Piece const&>(__gnu_cxx::__normal_iterator<Piece*, std::vector<Piece, std::allocator<Piece> > >, Piece const&)
-  0.00      8.94     0.00        4     0.00     0.00  void std::vector<std::__detail::_State<char>, std::allocator<std::__detail::_State<char> > >::_M_realloc_insert<std::__detail::_State<char> >(__gnu_cxx::__normal_iterator<std::__detail::_State<char>*, std::vector<std::__detail::_State<char>, std::allocator<std::__detail::_State<char> > > >, std::__detail::_State<char>&&)
-  0.00      8.94     0.00        4     0.00     0.00  std::__detail::_Compiler<std::__cxx11::regex_traits<char> >::_M_try_char()
-  0.00      8.94     0.00        3     0.00     0.00  std::__detail::_Scanner<char>::_M_scan_in_bracket()
-  0.00      8.94     0.00        2     0.00     0.00  std::_Hashtable<char, std::pair<char const, Piece>, std::allocator<std::pair<char const, Piece> >, std::__detail::_Select1st, std::equal_to<char>, std::hash<char>, std::__detail::_Mod_range_hashing, std::__detail::_Default_ranged_hash, std::__detail::_Prime_rehash_policy, std::__detail::_Hashtable_traits<false, false, true> >::_M_rehash(unsigned long, unsigned long const&)
-  0.00      8.94     0.00        2     0.00     0.00  std::__detail::_Scanner<char>::_M_scan_normal()
-  0.00      8.94     0.00        2     0.00     0.00  std::__detail::_Compiler<std::__cxx11::regex_traits<char> >::_M_quantifier()
-  0.00      8.94     0.00        2     0.00     0.00  bool std::__detail::_Compiler<std::__cxx11::regex_traits<char> >::_M_expression_term<false, false>(std::__detail::_Compiler<std::__cxx11::regex_traits<char> >::_BracketState&, std::__detail::_BracketMatcher<std::__cxx11::regex_traits<char>, false, false>&)
-  0.00      8.94     0.00        2     0.00     0.00  std::__detail::_Compiler<std::__cxx11::regex_traits<char> >::_M_bracket_expression()
-  0.00      8.94     0.00        2     0.00     0.00  std::__detail::_Compiler<std::__cxx11::regex_traits<char> >::_M_atom()
-  0.00      8.94     0.00        1     0.00     0.00  void init_magic<(PieceType)3>(unsigned int*, Magic*)
-  0.00      8.94     0.00        1     0.00     0.00  split_fen(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&)
-  0.00      8.94     0.00        1     0.00     0.00  visit_seq_scheduler::calculate_shortest_path()
-  0.00      8.94     0.00        1     0.00     0.00  solver::solver(Position)
-  0.00      8.94     0.00        1     0.00     0.00  solver::~solver()
-  0.00      8.94     0.00        1     0.00     0.00  Position::add_collection(Piece*, unsigned long)
-  0.00      8.94     0.00        1     0.00     0.00  Position::readFEN(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >)
-  0.00      8.94     0.00        1     0.00     0.00  std::__cxx11::regex_traits<char>::_RegexMask std::__cxx11::regex_traits<char>::lookup_classname<char const*>(char const*, char const*, bool) const
-  0.00      8.94     0.00        1     0.00     0.00  std::_Hashtable<char, std::pair<char const, Piece>, std::allocator<std::pair<char const, Piece> >, std::__detail::_Select1st, std::equal_to<char>, std::hash<char>, std::__detail::_Mod_range_hashing, std::__detail::_Default_ranged_hash, std::__detail::_Prime_rehash_policy, std::__detail::_Hashtable_traits<false, false, true> >::_Hashtable<std::pair<char const, Piece> const*>(std::pair<char const, Piece> const*, std::pair<char const, Piece> const*, unsigned long, std::hash<char> const&, std::equal_to<char> const&, std::allocator<std::pair<char const, Piece> > const&, std::integral_constant<bool, true>)
-  0.00      8.94     0.00        1     0.00     0.00  std::_Deque_base<std::__detail::_StateSeq<std::__cxx11::regex_traits<char> >, std::allocator<std::__detail::_StateSeq<std::__cxx11::regex_traits<char> > > >::~_Deque_base()
-  0.00      8.94     0.00        1     0.00     0.00  std::_Function_handler<bool (char), std::__detail::_BracketMatcher<std::__cxx11::regex_traits<char>, false, false> >::_M_manager(std::_Any_data&, std::_Any_data const&, std::_Manager_operation)
-  0.00      8.94     0.00        1     0.00     0.00  std::_Sp_counted_ptr_inplace<std::__detail::_NFA<std::__cxx11::regex_traits<char> >, std::allocator<void>, (__gnu_cxx::_Lock_policy)2>::_M_destroy()
-  0.00      8.94     0.00        1     0.00     0.00  std::_Sp_counted_ptr_inplace<std::__detail::_NFA<std::__cxx11::regex_traits<char> >, std::allocator<void>, (__gnu_cxx::_Lock_policy)2>::_M_dispose()
-  0.00      8.94     0.00        1     0.00     0.00  std::vector<Piece, std::allocator<Piece> >::~vector()
-  0.00      8.94     0.00        1     0.00     0.00  void std::vector<char, std::allocator<char> >::_M_realloc_insert<char>(__gnu_cxx::__normal_iterator<char*, std::vector<char, std::allocator<char> > >, char&&)
-  0.00      8.94     0.00        1     0.00     0.00  void std::vector<unsigned long, std::allocator<unsigned long> >::_M_realloc_insert<unsigned long const&>(__gnu_cxx::__normal_iterator<unsigned long*, std::vector<unsigned long, std::allocator<unsigned long> > >, unsigned long const&)
-  0.00      8.94     0.00        1     0.00     0.00  std::__detail::_BracketMatcher<std::__cxx11::regex_traits<char>, false, false>::_M_ready()
-  0.00      8.94     0.00        1     0.00     0.00  std::__detail::_NFA<std::__cxx11::regex_traits<char> >::_M_insert_repeat(long, long, bool)
-  0.00      8.94     0.00        1     0.00     0.00  std::__detail::_NFA<std::__cxx11::regex_traits<char> >::_M_insert_matcher(std::function<bool (char)>)
-  0.00      8.94     0.00        1     0.00     0.00  std::__detail::_NFA<std::__cxx11::regex_traits<char> >::_M_insert_subexpr_end()
-  0.00      8.94     0.00        1     0.00     0.00  std::__detail::_NFA<std::__cxx11::regex_traits<char> >::_M_insert_subexpr_begin()
-  0.00      8.94     0.00        1     0.00     0.00  std::__detail::_Scanner<char>::_M_eat_escape_ecma()
-  0.00      8.94     0.00        1     0.00     0.00  std::__detail::_Scanner<char>::_Scanner(char const*, char const*, std::regex_constants::syntax_option_type, std::locale)
-  0.00      8.94     0.00        1     0.00     0.00  std::__detail::_Compiler<std::__cxx11::regex_traits<char> >::_M_alternative()
-  0.00      8.94     0.00        1     0.00     0.00  std::__detail::_Compiler<std::__cxx11::regex_traits<char> >::_M_disjunction()
-  0.00      8.94     0.00        1     0.00     0.00  void std::__detail::_Compiler<std::__cxx11::regex_traits<char> >::_M_insert_bracket_matcher<false, false>(bool)
-  0.00      8.94     0.00        1     0.00     0.00  std::__detail::_Compiler<std::__cxx11::regex_traits<char> >::_M_pop()
-  0.00      8.94     0.00        1     0.00     0.00  std::__detail::_Compiler<std::__cxx11::regex_traits<char> >::_Compiler(char const*, char const*, std::locale const&, std::regex_constants::syntax_option_type)
-  0.00      8.94     0.00        1     0.00     0.00  std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >* std::__do_uninit_copy<std::__cxx11::regex_token_iterator<__gnu_cxx::__normal_iterator<char const*, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > >, char, std::__cxx11::regex_traits<char> >, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >*>(std::__cxx11::regex_token_iterator<__gnu_cxx::__normal_iterator<char const*, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > >, char, std::__cxx11::regex_traits<char> >, std::__cxx11::regex_token_iterator<__gnu_cxx::__normal_iterator<char const*, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > >, char, std::__cxx11::regex_traits<char> >, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >*)
+ 66.11      5.50     5.50 36387408     0.00     0.00  visit_seq_scheduler::min_route_estimate(Position const&) const
+  6.97      6.08     0.58  6845673     0.00     0.00  visit_seq_scheduler::sort_arr(MoveList<(MoveType)3, (Color)0>&, Position&, int)
+  6.61      6.63     0.55 136937418     0.00     0.00  Position::subordinates(Color, PieceType) const
+  5.77      7.11     0.48 99612146     0.00     0.00  operator==(Position const&, Position const&)
+  4.81      7.51     0.40 302596568     0.00     0.00  generate_moves(Color, PieceType, Position const&, Move*)
+  2.28      7.70     0.19 51876839     0.00     0.00  Position::do_move(Move const&)
+  2.28      7.89     0.19       18    10.56    98.56  solver::dfStack(Position, int, Move*)
+  1.68      8.03     0.14 152426864     0.00     0.00  attacks_bb(PieceType, Square, unsigned int)
+  0.96      8.11     0.08                             _init
+  0.84      8.18     0.07 51876852     0.00     0.00  Position::place_piece_at(Piece const&, Square)
+  0.84      8.25     0.07 37824571     0.00     0.00  Move* generate_all<(MoveType)3>(Color, Position const&, Move*)
+  0.24      8.27     0.02 56680184     0.00     0.00  Position::remove_piece_at(Square)
+  0.24      8.29     0.02 15489449     0.00     0.00  Position::winner(WinCon*) const
+  0.12      8.30     0.01 22335122     0.00     0.00  Move* generate<(MoveType)3, (Color)0>(Position const&, PieceType, Move*)
+  0.12      8.31     0.01 15489449     0.00     0.00  Move* generate<(MoveType)3, (Color)1>(Position const&, PieceType, Move*)
+  0.12      8.32     0.01 13691347     0.00     0.00  resolve(Position&)
+  0.00      8.32     0.00    32800     0.00     0.00  unsigned int sliding_attack<(PieceType)5>(Square, unsigned int)
+  0.00      8.32     0.00     3872     0.00     0.00  unsigned int sliding_attack<(PieceType)3>(Square, unsigned int)
+  0.00      8.32     0.00      681     0.00     0.00  Position::clear()
+  0.00      8.32     0.00      581     0.00     0.00  void init_magic<(PieceType)5>(unsigned int*, Magic*)
+  0.00      8.32     0.00      256     0.00     0.00  bool std::binary_search<__gnu_cxx::__normal_iterator<char const*, std::vector<char, std::allocator<char> > >, char>(__gnu_cxx::__normal_iterator<char const*, std::vector<char, std::allocator<char> > >, __gnu_cxx::__normal_iterator<char const*, std::vector<char, std::allocator<char> > >, char const&)
+  0.00      8.32     0.00      249     0.00     0.00  std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > std::__cxx11::regex_traits<char>::transform_primary<char const*>(char const*, char const*) const
+  0.00      8.32     0.00      249     0.00     0.00  __gnu_cxx::__normal_iterator<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const*, std::vector<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, std::allocator<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > > > > std::find<__gnu_cxx::__normal_iterator<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const*, std::vector<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, std::allocator<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > > > >, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > >(__gnu_cxx::__normal_iterator<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const*, std::vector<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, std::allocator<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > > > >, __gnu_cxx::__normal_iterator<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const*, std::vector<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, std::allocator<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > > > >, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&)
+  0.00      8.32     0.00      128     0.00     0.00  safe_destination(Square, int)
+  0.00      8.32     0.00       51     0.00     0.00  std::__detail::_Executor<__gnu_cxx::__normal_iterator<char const*, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > >, std::allocator<std::__cxx11::sub_match<__gnu_cxx::__normal_iterator<char const*, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > > > >, std::__cxx11::regex_traits<char>, true>::_M_dfs(std::__detail::_Executor<__gnu_cxx::__normal_iterator<char const*, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > >, std::allocator<std::__cxx11::sub_match<__gnu_cxx::__normal_iterator<char const*, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > > > >, std::__cxx11::regex_traits<char>, true>::_Match_mode, long)
+  0.00      8.32     0.00       49     0.00     0.00  std::_Function_handler<bool (char), std::__detail::_BracketMatcher<std::__cxx11::regex_traits<char>, false, false> >::_M_invoke(std::_Any_data const&, char&&)
+  0.00      8.32     0.00       40     0.00     0.00  std::__detail::_Compiler<std::__cxx11::regex_traits<char> >::_M_assertion()
+  0.00      8.32     0.00       34     0.00     0.00  operator<<(std::ostream&, Square const&)
+  0.00      8.32     0.00       26     0.00     0.00  std::__cxx11::regex_iterator<__gnu_cxx::__normal_iterator<char const*, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > >, char, std::__cxx11::regex_traits<char> >::operator==(std::__cxx11::regex_iterator<__gnu_cxx::__normal_iterator<char const*, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > >, char, std::__cxx11::regex_traits<char> > const&) const
+  0.00      8.32     0.00       18     0.00     0.00  _GLOBAL__sub_I_info
+  0.00      8.32     0.00       17     0.00     0.00  Piece::Piece(Color, PieceType)
+  0.00      8.32     0.00       17     0.00     0.00  std::_Deque_base<Move, std::allocator<Move> >::~_Deque_base()
+  0.00      8.32     0.00       17     0.00     0.00  operator<<(std::ostream&, Move const&)
+  0.00      8.32     0.00       15     0.00     0.00  std::__cxx11::regex_token_iterator<__gnu_cxx::__normal_iterator<char const*, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > >, char, std::__cxx11::regex_traits<char> >::regex_token_iterator(std::__cxx11::regex_token_iterator<__gnu_cxx::__normal_iterator<char const*, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > >, char, std::__cxx11::regex_traits<char> > const&)
+  0.00      8.32     0.00       12     0.00     0.00  std::__cxx11::regex_token_iterator<__gnu_cxx::__normal_iterator<char const*, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > >, char, std::__cxx11::regex_traits<char> >::operator==(std::__cxx11::regex_token_iterator<__gnu_cxx::__normal_iterator<char const*, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > >, char, std::__cxx11::regex_traits<char> > const&) const
+  0.00      8.32     0.00       11     0.00     0.00  std::vector<std::__cxx11::sub_match<__gnu_cxx::__normal_iterator<char const*, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > > >, std::allocator<std::__cxx11::sub_match<__gnu_cxx::__normal_iterator<char const*, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > > > > >::_M_fill_assign(unsigned long, std::__cxx11::sub_match<__gnu_cxx::__normal_iterator<char const*, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > > > const&)
+  0.00      8.32     0.00        9     0.00     0.00  bool std::__detail::__regex_algo_impl<__gnu_cxx::__normal_iterator<char const*, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > >, std::allocator<std::__cxx11::sub_match<__gnu_cxx::__normal_iterator<char const*, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > > > >, char, std::__cxx11::regex_traits<char> >(__gnu_cxx::__normal_iterator<char const*, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > >, __gnu_cxx::__normal_iterator<char const*, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > >, std::__cxx11::match_results<__gnu_cxx::__normal_iterator<char const*, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > >, std::allocator<std::__cxx11::sub_match<__gnu_cxx::__normal_iterator<char const*, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > > > > >&, std::__cxx11::basic_regex<char, std::__cxx11::regex_traits<char> > const&, std::regex_constants::match_flag_type, std::__detail::_RegexExecutorPolicy, bool)
+  0.00      8.32     0.00        7     0.00     0.00  std::__detail::_Executor<__gnu_cxx::__normal_iterator<char const*, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > >, std::allocator<std::__cxx11::sub_match<__gnu_cxx::__normal_iterator<char const*, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > > > >, std::__cxx11::regex_traits<char>, true>::_M_rep_once_more(std::__detail::_Executor<__gnu_cxx::__normal_iterator<char const*, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > >, std::allocator<std::__cxx11::sub_match<__gnu_cxx::__normal_iterator<char const*, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > > > >, std::__cxx11::regex_traits<char>, true>::_Match_mode, long)
+  0.00      8.32     0.00        6     0.00     0.00  void std::vector<Piece, std::allocator<Piece> >::_M_realloc_insert<Piece const&>(__gnu_cxx::__normal_iterator<Piece*, std::vector<Piece, std::allocator<Piece> > >, Piece const&)
+  0.00      8.32     0.00        4     0.00     0.00  void std::vector<std::__detail::_State<char>, std::allocator<std::__detail::_State<char> > >::_M_realloc_insert<std::__detail::_State<char> >(__gnu_cxx::__normal_iterator<std::__detail::_State<char>*, std::vector<std::__detail::_State<char>, std::allocator<std::__detail::_State<char> > > >, std::__detail::_State<char>&&)
+  0.00      8.32     0.00        4     0.00     0.00  std::__detail::_Compiler<std::__cxx11::regex_traits<char> >::_M_try_char()
+  0.00      8.32     0.00        3     0.00     0.00  std::__detail::_Scanner<char>::_M_scan_in_bracket()
+  0.00      8.32     0.00        2     0.00     0.00  std::_Hashtable<char, std::pair<char const, Piece>, std::allocator<std::pair<char const, Piece> >, std::__detail::_Select1st, std::equal_to<char>, std::hash<char>, std::__detail::_Mod_range_hashing, std::__detail::_Default_ranged_hash, std::__detail::_Prime_rehash_policy, std::__detail::_Hashtable_traits<false, false, true> >::_M_rehash(unsigned long, unsigned long const&)
+  0.00      8.32     0.00        2     0.00     0.00  std::__detail::_Scanner<char>::_M_scan_normal()
+  0.00      8.32     0.00        2     0.00     0.00  std::__detail::_Compiler<std::__cxx11::regex_traits<char> >::_M_quantifier()
+  0.00      8.32     0.00        2     0.00     0.00  bool std::__detail::_Compiler<std::__cxx11::regex_traits<char> >::_M_expression_term<false, false>(std::__detail::_Compiler<std::__cxx11::regex_traits<char> >::_BracketState&, std::__detail::_BracketMatcher<std::__cxx11::regex_traits<char>, false, false>&)
+  0.00      8.32     0.00        2     0.00     0.00  std::__detail::_Compiler<std::__cxx11::regex_traits<char> >::_M_bracket_expression()
+  0.00      8.32     0.00        2     0.00     0.00  std::__detail::_Compiler<std::__cxx11::regex_traits<char> >::_M_atom()
+  0.00      8.32     0.00        1     0.00     0.00  void init_magic<(PieceType)3>(unsigned int*, Magic*)
+  0.00      8.32     0.00        1     0.00     0.00  split_fen(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&)
+  0.00      8.32     0.00        1     0.00     0.00  visit_seq_scheduler::calculate_shortest_path()
+  0.00      8.32     0.00        1     0.00     0.00  solver::solver(Position)
+  0.00      8.32     0.00        1     0.00     0.00  solver::~solver()
+  0.00      8.32     0.00        1     0.00     0.00  Position::add_collection(Piece*, unsigned long)
+  0.00      8.32     0.00        1     0.00     0.00  Position::readFEN(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >)
+  0.00      8.32     0.00        1     0.00     0.00  std::__cxx11::regex_traits<char>::_RegexMask std::__cxx11::regex_traits<char>::lookup_classname<char const*>(char const*, char const*, bool) const
+  0.00      8.32     0.00        1     0.00     0.00  std::_Hashtable<char, std::pair<char const, Piece>, std::allocator<std::pair<char const, Piece> >, std::__detail::_Select1st, std::equal_to<char>, std::hash<char>, std::__detail::_Mod_range_hashing, std::__detail::_Default_ranged_hash, std::__detail::_Prime_rehash_policy, std::__detail::_Hashtable_traits<false, false, true> >::_Hashtable<std::pair<char const, Piece> const*>(std::pair<char const, Piece> const*, std::pair<char const, Piece> const*, unsigned long, std::hash<char> const&, std::equal_to<char> const&, std::allocator<std::pair<char const, Piece> > const&, std::integral_constant<bool, true>)
+  0.00      8.32     0.00        1     0.00     0.00  std::_Deque_base<std::__detail::_StateSeq<std::__cxx11::regex_traits<char> >, std::allocator<std::__detail::_StateSeq<std::__cxx11::regex_traits<char> > > >::~_Deque_base()
+  0.00      8.32     0.00        1     0.00     0.00  std::_Function_handler<bool (char), std::__detail::_BracketMatcher<std::__cxx11::regex_traits<char>, false, false> >::_M_manager(std::_Any_data&, std::_Any_data const&, std::_Manager_operation)
+  0.00      8.32     0.00        1     0.00     0.00  std::_Sp_counted_ptr_inplace<std::__detail::_NFA<std::__cxx11::regex_traits<char> >, std::allocator<void>, (__gnu_cxx::_Lock_policy)2>::_M_destroy()
+  0.00      8.32     0.00        1     0.00     0.00  std::_Sp_counted_ptr_inplace<std::__detail::_NFA<std::__cxx11::regex_traits<char> >, std::allocator<void>, (__gnu_cxx::_Lock_policy)2>::_M_dispose()
+  0.00      8.32     0.00        1     0.00     0.00  std::vector<Piece, std::allocator<Piece> >::~vector()
+  0.00      8.32     0.00        1     0.00     0.00  void std::vector<char, std::allocator<char> >::_M_realloc_insert<char>(__gnu_cxx::__normal_iterator<char*, std::vector<char, std::allocator<char> > >, char&&)
+  0.00      8.32     0.00        1     0.00     0.00  void std::vector<unsigned long, std::allocator<unsigned long> >::_M_realloc_insert<unsigned long const&>(__gnu_cxx::__normal_iterator<unsigned long*, std::vector<unsigned long, std::allocator<unsigned long> > >, unsigned long const&)
+  0.00      8.32     0.00        1     0.00     0.00  std::__detail::_BracketMatcher<std::__cxx11::regex_traits<char>, false, false>::_M_ready()
+  0.00      8.32     0.00        1     0.00     0.00  std::__detail::_NFA<std::__cxx11::regex_traits<char> >::_M_insert_repeat(long, long, bool)
+  0.00      8.32     0.00        1     0.00     0.00  std::__detail::_NFA<std::__cxx11::regex_traits<char> >::_M_insert_matcher(std::function<bool (char)>)
+  0.00      8.32     0.00        1     0.00     0.00  std::__detail::_NFA<std::__cxx11::regex_traits<char> >::_M_insert_subexpr_end()
+  0.00      8.32     0.00        1     0.00     0.00  std::__detail::_NFA<std::__cxx11::regex_traits<char> >::_M_insert_subexpr_begin()
+  0.00      8.32     0.00        1     0.00     0.00  std::__detail::_Scanner<char>::_M_eat_escape_ecma()
+  0.00      8.32     0.00        1     0.00     0.00  std::__detail::_Scanner<char>::_Scanner(char const*, char const*, std::regex_constants::syntax_option_type, std::locale)
+  0.00      8.32     0.00        1     0.00     0.00  std::__detail::_Compiler<std::__cxx11::regex_traits<char> >::_M_alternative()
+  0.00      8.32     0.00        1     0.00     0.00  std::__detail::_Compiler<std::__cxx11::regex_traits<char> >::_M_disjunction()
+  0.00      8.32     0.00        1     0.00     0.00  void std::__detail::_Compiler<std::__cxx11::regex_traits<char> >::_M_insert_bracket_matcher<false, false>(bool)
+  0.00      8.32     0.00        1     0.00     0.00  std::__detail::_Compiler<std::__cxx11::regex_traits<char> >::_M_pop()
+  0.00      8.32     0.00        1     0.00     0.00  std::__detail::_Compiler<std::__cxx11::regex_traits<char> >::_Compiler(char const*, char const*, std::locale const&, std::regex_constants::syntax_option_type)
+  0.00      8.32     0.00        1     0.00     0.00  std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >* std::__do_uninit_copy<std::__cxx11::regex_token_iterator<__gnu_cxx::__normal_iterator<char const*, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > >, char, std::__cxx11::regex_traits<char> >, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >*>(std::__cxx11::regex_token_iterator<__gnu_cxx::__normal_iterator<char const*, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > >, char, std::__cxx11::regex_traits<char> >, std::__cxx11::regex_token_iterator<__gnu_cxx::__normal_iterator<char const*, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > >, char, std::__cxx11::regex_traits<char> >, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >*)
 
  %         the percentage of the total running time of the
 time       program used by this function.
@@ -117,128 +117,123 @@ notice and this notice are preserved.
 		     Call graph (explanation follows)
 
 
-granularity: each sample hit covers 4 byte(s) for 0.11% of 8.94 seconds
+granularity: each sample hit covers 4 byte(s) for 0.12% of 8.32 seconds
 
 index % time    self  children    called     name
                                                  <spontaneous>
-[1]     99.8    0.00    8.92                 main [1]
-                6.96    1.96       1/1           resolve(Position&) <cycle 2> [12]
-                0.00    0.00       1/1           Position::readFEN(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >) [18]
+[1]     99.0    0.00    8.24                 main [1]
+                0.78    7.46       1/1           resolve(Position&) <cycle 2> [18]
+                0.00    0.00       1/1           Position::readFEN(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >) [19]
                 0.00    0.00       1/681         Position::clear() [30]
                 0.00    0.00       1/1           Position::add_collection(Piece*, unsigned long) [65]
                 0.00    0.00       1/1           std::vector<Piece, std::allocator<Piece> >::~vector() [72]
 -----------------------------------------------
-[2]     99.8    6.96    1.96       1+123689500 <cycle 2 as a whole> [2]
-                5.65    0.00 36357555             visit_seq_scheduler::min_route_estimate(Position const&) const <cycle 2> [3]
-                0.48    1.75      18             solver::dfStack(Position, int, Move*) <cycle 2> [4]
-                0.57    0.21 4872273             visit_seq_scheduler::sort_arr(MoveList<(MoveType)3, (Color)0>&, Position&, int) <cycle 2> [8]
-                0.26    0.00 82459655+1           resolve(Position&) <cycle 2> [12]
+[2]     99.0    0.78    7.46       1+20537037 <cycle 2 as a whole> [2]
+                0.58    5.88 6845673             visit_seq_scheduler::sort_arr(MoveList<(MoveType)3, (Color)0>&, Position&, int) <cycle 2> [3]
+                0.19    1.58      18             solver::dfStack(Position, int, Move*) <cycle 2> [5]
+                0.01    0.00 13691347+1           resolve(Position&) <cycle 2> [18]
 -----------------------------------------------
-                             10486876             solver::dfStack(Position, int, Move*) <cycle 2> [4]
-                             25870679             visit_seq_scheduler::sort_arr(MoveList<(MoveType)3, (Color)0>&, Position&, int) <cycle 2> [8]
-[3]     63.2    5.65    0.00 36357555         visit_seq_scheduler::min_route_estimate(Position const&) const <cycle 2> [3]
-                             72715108             resolve(Position&) <cycle 2> [12]
+                             6845673             solver::dfStack(Position, int, Move*) <cycle 2> [5]
+[3]     77.6    0.58    5.88 6845673         visit_seq_scheduler::sort_arr(MoveList<(MoveType)3, (Color)0>&, Position&, int) <cycle 2> [3]
+                5.50    0.00 36387408/36387408     visit_seq_scheduler::min_route_estimate(Position const&) const [4]
+                0.13    0.24 36387408/51876839     Position::do_move(Move const&) [10]
+                             6845673             resolve(Position&) <cycle 2> [18]
 -----------------------------------------------
-                                  18             resolve(Position&) <cycle 2> [12]
-[4]     24.9    0.48    1.75      18         solver::dfStack(Position, int, Move*) <cycle 2> [4]
-                0.00    0.81 15359151/15359151     Position::winner(WinCon*) const [7]
-                0.68    0.00 125556293/125556293     operator==(Position const&, Position const&) [9]
-                0.03    0.10 15359133/41229812     Position::do_move(Move const&) [11]
-                0.01    0.10 4872273/35590575     Move* generate_all<(MoveType)3>(Color, Position const&, Move*) [6]
-                0.01    0.01 4872273/284724600     generate_moves(Color, PieceType, Position const&, Move*) [5]
-                0.00    0.00 4872273/20231424     Move* generate<(MoveType)3, (Color)0>(Position const&, PieceType, Move*) [17]
+                5.50    0.00 36387408/36387408     visit_seq_scheduler::sort_arr(MoveList<(MoveType)3, (Color)0>&, Position&, int) <cycle 2> [3]
+[4]     66.1    5.50    0.00 36387408         visit_seq_scheduler::min_route_estimate(Position const&) const [4]
+-----------------------------------------------
+                                  18             resolve(Position&) <cycle 2> [18]
+[5]     21.3    0.19    1.58      18         solver::dfStack(Position, int, Move*) <cycle 2> [5]
+                0.02    0.76 15489449/15489449     Position::winner(WinCon*) const [8]
+                0.48    0.00 99612146/99612146     operator==(Position const&, Position const&) [11]
+                0.06    0.10 15489431/51876839     Position::do_move(Move const&) [10]
+                0.01    0.13 6845673/37824571     Move* generate_all<(MoveType)3>(Color, Position const&, Move*) [7]
+                0.01    0.01 6845673/302596568     generate_moves(Color, PieceType, Position const&, Move*) [6]
+                0.00    0.00 6845673/22335122     Move* generate<(MoveType)3, (Color)0>(Position const&, PieceType, Move*) [16]
                 0.00    0.00     680/681         Position::clear() [30]
                 0.00    0.00      17/17          std::_Deque_base<Move, std::allocator<Move> >::~_Deque_base() [43]
-                             10486876             visit_seq_scheduler::min_route_estimate(Position const&) const <cycle 2> [3]
-                             4872273             resolve(Position&) <cycle 2> [12]
-                             4872273             visit_seq_scheduler::sort_arr(MoveList<(MoveType)3, (Color)0>&, Position&, int) <cycle 2> [8]
+                             6845673             resolve(Position&) <cycle 2> [18]
+                             6845673             visit_seq_scheduler::sort_arr(MoveList<(MoveType)3, (Color)0>&, Position&, int) <cycle 2> [3]
 -----------------------------------------------
-                0.01    0.01 4872273/284724600     solver::dfStack(Position, int, Move*) <cycle 2> [4]
-                0.05    0.04 30718302/284724600     Position::winner(WinCon*) const [7]
-                0.42    0.32 249134025/284724600     Move* generate_all<(MoveType)3>(Color, Position const&, Move*) [6]
-[5]      9.4    0.48    0.36 284724600         generate_moves(Color, PieceType, Position const&, Move*) [5]
-                0.26    0.00 80290546/121431748     Position::subordinates(Color, PieceType) const [10]
-                0.10    0.00 95649445/136791289     attacks_bb(PieceType, Square, unsigned int) [13]
+                0.01    0.01 6845673/302596568     solver::dfStack(Position, int, Move*) <cycle 2> [5]
+                0.04    0.04 30978898/302596568     Position::winner(WinCon*) const [8]
+                0.35    0.38 264771997/302596568     Move* generate_all<(MoveType)3>(Color, Position const&, Move*) [7]
+[6]     10.0    0.40    0.43 302596568         generate_moves(Color, PieceType, Position const&, Move*) [6]
+                0.34    0.00 85060579/136937418     Position::subordinates(Color, PieceType) const [9]
+                0.09    0.00 100550025/152426864     attacks_bb(PieceType, Square, unsigned int) [12]
 -----------------------------------------------
-                0.01    0.10 4872273/35590575     solver::dfStack(Position, int, Move*) <cycle 2> [4]
-                0.08    0.64 30718302/35590575     Position::winner(WinCon*) const [7]
-[6]      9.3    0.09    0.74 35590575         Move* generate_all<(MoveType)3>(Color, Position const&, Move*) [6]
-                0.42    0.32 249134025/284724600     generate_moves(Color, PieceType, Position const&, Move*) [5]
+                0.01    0.13 6845673/37824571     solver::dfStack(Position, int, Move*) <cycle 2> [5]
+                0.06    0.60 30978898/37824571     Position::winner(WinCon*) const [8]
+[7]      9.6    0.07    0.73 37824571         Move* generate_all<(MoveType)3>(Color, Position const&, Move*) [7]
+                0.35    0.38 264771997/302596568     generate_moves(Color, PieceType, Position const&, Move*) [6]
 -----------------------------------------------
-                0.00    0.81 15359151/15359151     solver::dfStack(Position, int, Move*) <cycle 2> [4]
-[7]      9.1    0.00    0.81 15359151         Position::winner(WinCon*) const [7]
-                0.08    0.64 30718302/35590575     Move* generate_all<(MoveType)3>(Color, Position const&, Move*) [6]
-                0.05    0.04 30718302/284724600     generate_moves(Color, PieceType, Position const&, Move*) [5]
-                0.01    0.00 15359151/20231424     Move* generate<(MoveType)3, (Color)0>(Position const&, PieceType, Move*) [17]
-                0.00    0.00 15359151/15359151     Move* generate<(MoveType)3, (Color)1>(Position const&, PieceType, Move*) [27]
+                0.02    0.76 15489449/15489449     solver::dfStack(Position, int, Move*) <cycle 2> [5]
+[8]      9.3    0.02    0.76 15489449         Position::winner(WinCon*) const [8]
+                0.06    0.60 30978898/37824571     Move* generate_all<(MoveType)3>(Color, Position const&, Move*) [7]
+                0.04    0.04 30978898/302596568     generate_moves(Color, PieceType, Position const&, Move*) [6]
+                0.01    0.00 15489449/15489449     Move* generate<(MoveType)3, (Color)1>(Position const&, PieceType, Move*) [17]
+                0.01    0.00 15489449/22335122     Move* generate<(MoveType)3, (Color)0>(Position const&, PieceType, Move*) [16]
 -----------------------------------------------
-                             4872273             solver::dfStack(Position, int, Move*) <cycle 2> [4]
-[8]      8.7    0.57    0.21 4872273         visit_seq_scheduler::sort_arr(MoveList<(MoveType)3, (Color)0>&, Position&, int) <cycle 2> [8]
-                0.05    0.16 25870679/41229812     Position::do_move(Move const&) [11]
-                             25870679             visit_seq_scheduler::min_route_estimate(Position const&) const <cycle 2> [3]
-                             4872273             resolve(Position&) <cycle 2> [12]
+                0.21    0.00 51876839/136937418     Position::do_move(Move const&) [10]
+                0.34    0.00 85060579/136937418     generate_moves(Color, PieceType, Position const&, Move*) [6]
+[9]      6.6    0.55    0.00 136937418         Position::subordinates(Color, PieceType) const [9]
 -----------------------------------------------
-                0.68    0.00 125556293/125556293     solver::dfStack(Position, int, Move*) <cycle 2> [4]
-[9]      7.6    0.68    0.00 125556293         operator==(Position const&, Position const&) [9]
+                0.06    0.10 15489431/51876839     solver::dfStack(Position, int, Move*) <cycle 2> [5]
+                0.13    0.24 36387408/51876839     visit_seq_scheduler::sort_arr(MoveList<(MoveType)3, (Color)0>&, Position&, int) <cycle 2> [3]
+[10]     6.4    0.19    0.35 51876839         Position::do_move(Move const&) [10]
+                0.21    0.00 51876839/136937418     Position::subordinates(Color, PieceType) const [9]
+                0.07    0.00 51876839/51876852     Position::place_piece_at(Piece const&, Square) [14]
+                0.05    0.00 51876839/152426864     attacks_bb(PieceType, Square, unsigned int) [12]
+                0.02    0.00 51876839/56680184     Position::remove_piece_at(Square) [15]
 -----------------------------------------------
-                0.13    0.00 41141202/121431748     Position::do_move(Move const&) [11]
-                0.26    0.00 80290546/121431748     generate_moves(Color, PieceType, Position const&, Move*) [5]
-[10]     4.4    0.39    0.00 121431748         Position::subordinates(Color, PieceType) const [10]
+                0.48    0.00 99612146/99612146     solver::dfStack(Position, int, Move*) <cycle 2> [5]
+[11]     5.8    0.48    0.00 99612146         operator==(Position const&, Position const&) [11]
 -----------------------------------------------
-                0.03    0.10 15359133/41229812     solver::dfStack(Position, int, Move*) <cycle 2> [4]
-                0.05    0.16 25870679/41229812     visit_seq_scheduler::sort_arr(MoveList<(MoveType)3, (Color)0>&, Position&, int) <cycle 2> [8]
-[11]     3.8    0.08    0.26 41229812         Position::do_move(Move const&) [11]
-                0.13    0.00 41141202/121431748     Position::subordinates(Color, PieceType) const [10]
-                0.05    0.00 41141202/44459271     Position::remove_piece_at(Square) [14]
-                0.05    0.00 41141844/136791289     attacks_bb(PieceType, Square, unsigned int) [13]
-                0.03    0.00 41141202/41141215     Position::place_piece_at(Piece const&, Square) [15]
+                0.05    0.00 51876839/152426864     Position::do_move(Move const&) [10]
+                0.09    0.00 100550025/152426864     generate_moves(Color, PieceType, Position const&, Move*) [6]
+[12]     1.7    0.14    0.00 152426864         attacks_bb(PieceType, Square, unsigned int) [12]
 -----------------------------------------------
-                                   1             resolve(Position&) <cycle 2> [12]
-                             4872273             visit_seq_scheduler::sort_arr(MoveList<(MoveType)3, (Color)0>&, Position&, int) <cycle 2> [8]
-                             4872273             solver::dfStack(Position, int, Move*) <cycle 2> [4]
-                             72715108             visit_seq_scheduler::min_route_estimate(Position const&) const <cycle 2> [3]
-                6.96    1.96       1/1           main [1]
-[12]     2.9    0.26    0.00 82459655+1       resolve(Position&) <cycle 2> [12]
+                                                 <spontaneous>
+[13]     1.0    0.08    0.00                 _init [13]
+-----------------------------------------------
+                0.00    0.00      13/51876852     Position::readFEN(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >) [19]
+                0.07    0.00 51876839/51876852     Position::do_move(Move const&) [10]
+[14]     0.9    0.07    0.00 51876852         Position::place_piece_at(Piece const&, Square) [14]
+                0.00    0.00 4803345/56680184     Position::remove_piece_at(Square) [15]
+-----------------------------------------------
+                0.00    0.00 4803345/56680184     Position::place_piece_at(Piece const&, Square) [14]
+                0.02    0.00 51876839/56680184     Position::do_move(Move const&) [10]
+[15]     0.2    0.02    0.00 56680184         Position::remove_piece_at(Square) [15]
+-----------------------------------------------
+                0.00    0.00 6845673/22335122     solver::dfStack(Position, int, Move*) <cycle 2> [5]
+                0.01    0.00 15489449/22335122     Position::winner(WinCon*) const [8]
+[16]     0.1    0.01    0.00 22335122         Move* generate<(MoveType)3, (Color)0>(Position const&, PieceType, Move*) [16]
+-----------------------------------------------
+                0.01    0.00 15489449/15489449     Position::winner(WinCon*) const [8]
+[17]     0.1    0.01    0.00 15489449         Move* generate<(MoveType)3, (Color)1>(Position const&, PieceType, Move*) [17]
+-----------------------------------------------
+                                   1             resolve(Position&) <cycle 2> [18]
+                             6845673             visit_seq_scheduler::sort_arr(MoveList<(MoveType)3, (Color)0>&, Position&, int) <cycle 2> [3]
+                             6845673             solver::dfStack(Position, int, Move*) <cycle 2> [5]
+                0.78    7.46       1/1           main [1]
+[18]     0.1    0.01    0.00 13691347+1       resolve(Position&) <cycle 2> [18]
                 0.00    0.00      17/17          operator<<(std::ostream&, Move const&) [44]
                 0.00    0.00       1/1           solver::solver(Position) [63]
                 0.00    0.00       1/1           solver::~solver() [64]
-                                  18             solver::dfStack(Position, int, Move*) <cycle 2> [4]
-                                   1             resolve(Position&) <cycle 2> [12]
------------------------------------------------
-                0.05    0.00 41141844/136791289     Position::do_move(Move const&) [11]
-                0.10    0.00 95649445/136791289     generate_moves(Color, PieceType, Position const&, Move*) [5]
-[13]     1.7    0.15    0.00 136791289         attacks_bb(PieceType, Square, unsigned int) [13]
------------------------------------------------
-                0.00    0.00 3318069/44459271     Position::place_piece_at(Piece const&, Square) [15]
-                0.05    0.00 41141202/44459271     Position::do_move(Move const&) [11]
-[14]     0.6    0.05    0.00 44459271         Position::remove_piece_at(Square) [14]
------------------------------------------------
-                0.00    0.00      13/41141215     Position::readFEN(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >) [18]
-                0.03    0.00 41141202/41141215     Position::do_move(Move const&) [11]
-[15]     0.4    0.03    0.00 41141215         Position::place_piece_at(Piece const&, Square) [15]
-                0.00    0.00 3318069/44459271     Position::remove_piece_at(Square) [14]
------------------------------------------------
-                                                 <spontaneous>
-[16]     0.2    0.02    0.00                 _init [16]
------------------------------------------------
-                0.00    0.00 4872273/20231424     solver::dfStack(Position, int, Move*) <cycle 2> [4]
-                0.01    0.00 15359151/20231424     Position::winner(WinCon*) const [7]
-[17]     0.1    0.01    0.00 20231424         Move* generate<(MoveType)3, (Color)0>(Position const&, PieceType, Move*) [17]
+                                  18             solver::dfStack(Position, int, Move*) <cycle 2> [5]
+                                   1             resolve(Position&) <cycle 2> [18]
 -----------------------------------------------
                 0.00    0.00       1/1           main [1]
-[18]     0.0    0.00    0.00       1         Position::readFEN(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >) [18]
-                0.00    0.00      13/41141215     Position::place_piece_at(Piece const&, Square) [15]
+[19]     0.0    0.00    0.00       1         Position::readFEN(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >) [19]
+                0.00    0.00      13/51876852     Position::place_piece_at(Piece const&, Square) [14]
                 0.00    0.00      38/40          std::__detail::_Compiler<std::__cxx11::regex_traits<char> >::_M_assertion() [38]
                 0.00    0.00       1/1           split_fen(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&) [61]
 -----------------------------------------------
-[19]     0.0    0.00    0.00     531+117     <cycle 1 as a whole> [19]
+[20]     0.0    0.00    0.00     531+117     <cycle 1 as a whole> [20]
                 0.00    0.00     581+4           void init_magic<(PieceType)5>(unsigned int*, Magic*) <cycle 1> [31]
                 0.00    0.00      51+58          std::__detail::_Executor<__gnu_cxx::__normal_iterator<char const*, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > >, std::allocator<std::__cxx11::sub_match<__gnu_cxx::__normal_iterator<char const*, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > > > >, std::__cxx11::regex_traits<char>, true>::_M_dfs(std::__detail::_Executor<__gnu_cxx::__normal_iterator<char const*, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > >, std::allocator<std::__cxx11::sub_match<__gnu_cxx::__normal_iterator<char const*, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > > > >, std::__cxx11::regex_traits<char>, true>::_Match_mode, long) <cycle 1> [36]
                 0.00    0.00       9             bool std::__detail::__regex_algo_impl<__gnu_cxx::__normal_iterator<char const*, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > >, std::allocator<std::__cxx11::sub_match<__gnu_cxx::__normal_iterator<char const*, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > > > >, char, std::__cxx11::regex_traits<char> >(__gnu_cxx::__normal_iterator<char const*, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > >, __gnu_cxx::__normal_iterator<char const*, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > >, std::__cxx11::match_results<__gnu_cxx::__normal_iterator<char const*, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > >, std::allocator<std::__cxx11::sub_match<__gnu_cxx::__normal_iterator<char const*, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > > > > >&, std::__cxx11::basic_regex<char, std::__cxx11::regex_traits<char> > const&, std::regex_constants::match_flag_type, std::__detail::_RegexExecutorPolicy, bool) <cycle 1> [48]
                 0.00    0.00       7             std::__detail::_Executor<__gnu_cxx::__normal_iterator<char const*, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > >, std::allocator<std::__cxx11::sub_match<__gnu_cxx::__normal_iterator<char const*, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > > > >, std::__cxx11::regex_traits<char>, true>::_M_rep_once_more(std::__detail::_Executor<__gnu_cxx::__normal_iterator<char const*, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > >, std::allocator<std::__cxx11::sub_match<__gnu_cxx::__normal_iterator<char const*, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > > > >, std::__cxx11::regex_traits<char>, true>::_Match_mode, long) <cycle 1> [49]
------------------------------------------------
-                0.00    0.00 15359151/15359151     Position::winner(WinCon*) const [7]
-[27]     0.0    0.00    0.00 15359151         Move* generate<(MoveType)3, (Color)1>(Position const&, PieceType, Move*) [27]
 -----------------------------------------------
                 0.00    0.00   32800/32800       void init_magic<(PieceType)5>(unsigned int*, Magic*) <cycle 1> [31]
 [28]     0.0    0.00    0.00   32800         unsigned int sliding_attack<(PieceType)5>(Square, unsigned int) [28]
@@ -247,7 +242,7 @@ index % time    self  children    called     name
 [29]     0.0    0.00    0.00    3872         unsigned int sliding_attack<(PieceType)3>(Square, unsigned int) [29]
 -----------------------------------------------
                 0.00    0.00       1/681         main [1]
-                0.00    0.00     680/681         solver::dfStack(Position, int, Move*) <cycle 2> [4]
+                0.00    0.00     680/681         solver::dfStack(Position, int, Move*) <cycle 2> [5]
 [30]     0.0    0.00    0.00     681         Position::clear() [30]
 -----------------------------------------------
                                    4             void init_magic<(PieceType)5>(unsigned int*, Magic*) <cycle 1> [31]
@@ -298,7 +293,7 @@ index % time    self  children    called     name
 [37]     0.0    0.00    0.00      49         std::_Function_handler<bool (char), std::__detail::_BracketMatcher<std::__cxx11::regex_traits<char>, false, false> >::_M_invoke(std::_Any_data const&, char&&) [37]
 -----------------------------------------------
                 0.00    0.00       2/40          std::__detail::_Compiler<std::__cxx11::regex_traits<char> >::_M_alternative() [82]
-                0.00    0.00      38/40          Position::readFEN(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >) [18]
+                0.00    0.00      38/40          Position::readFEN(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >) [19]
 [38]     0.0    0.00    0.00      40         std::__detail::_Compiler<std::__cxx11::regex_traits<char> >::_M_assertion() [38]
 -----------------------------------------------
                 0.00    0.00      34/34          operator<<(std::ostream&, Move const&) [44]
@@ -315,10 +310,10 @@ index % time    self  children    called     name
                 0.00    0.00      17/17          __static_initialization_and_destruction_0() [101]
 [42]     0.0    0.00    0.00      17         Piece::Piece(Color, PieceType) [42]
 -----------------------------------------------
-                0.00    0.00      17/17          solver::dfStack(Position, int, Move*) <cycle 2> [4]
+                0.00    0.00      17/17          solver::dfStack(Position, int, Move*) <cycle 2> [5]
 [43]     0.0    0.00    0.00      17         std::_Deque_base<Move, std::allocator<Move> >::~_Deque_base() [43]
 -----------------------------------------------
-                0.00    0.00      17/17          resolve(Position&) <cycle 2> [12]
+                0.00    0.00      17/17          resolve(Position&) <cycle 2> [18]
 [44]     0.0    0.00    0.00      17         operator<<(std::ostream&, Move const&) [44]
                 0.00    0.00      34/34          operator<<(std::ostream&, Square const&) [39]
 -----------------------------------------------
@@ -395,7 +390,7 @@ index % time    self  children    called     name
 [60]     0.0    0.00    0.00       1         void init_magic<(PieceType)3>(unsigned int*, Magic*) [60]
                 0.00    0.00    3872/3872        unsigned int sliding_attack<(PieceType)3>(Square, unsigned int) [29]
 -----------------------------------------------
-                0.00    0.00       1/1           Position::readFEN(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >) [18]
+                0.00    0.00       1/1           Position::readFEN(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >) [19]
 [61]     0.0    0.00    0.00       1         split_fen(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&) [61]
                 0.00    0.00      15/15          std::__cxx11::regex_token_iterator<__gnu_cxx::__normal_iterator<char const*, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > >, char, std::__cxx11::regex_traits<char> >::regex_token_iterator(std::__cxx11::regex_token_iterator<__gnu_cxx::__normal_iterator<char const*, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > >, char, std::__cxx11::regex_traits<char> > const&) [45]
                 0.00    0.00       6/12          std::__cxx11::regex_token_iterator<__gnu_cxx::__normal_iterator<char const*, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > >, char, std::__cxx11::regex_traits<char> >::operator==(std::__cxx11::regex_token_iterator<__gnu_cxx::__normal_iterator<char const*, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > >, char, std::__cxx11::regex_traits<char> > const&) const [46]
@@ -411,11 +406,11 @@ index % time    self  children    called     name
                 0.00    0.00       1/1           solver::solver(Position) [63]
 [62]     0.0    0.00    0.00       1         visit_seq_scheduler::calculate_shortest_path() [62]
 -----------------------------------------------
-                0.00    0.00       1/1           resolve(Position&) <cycle 2> [12]
+                0.00    0.00       1/1           resolve(Position&) <cycle 2> [18]
 [63]     0.0    0.00    0.00       1         solver::solver(Position) [63]
                 0.00    0.00       1/1           visit_seq_scheduler::calculate_shortest_path() [62]
 -----------------------------------------------
-                0.00    0.00       1/1           resolve(Position&) <cycle 2> [12]
+                0.00    0.00       1/1           resolve(Position&) <cycle 2> [18]
 [64]     0.0    0.00    0.00       1         solver::~solver() [64]
 -----------------------------------------------
                 0.00    0.00       1/1           main [1]
@@ -611,30 +606,30 @@ notice and this notice are preserved.
 
 Index by function name
 
-  [41] _GLOBAL__sub_I_info     [7] Position::winner(WinCon*) const [80] std::__detail::_Scanner<char>::_M_eat_escape_ecma()
-  [13] attacks_bb(PieceType, Square, unsigned int) [66] std::__cxx11::regex_traits<char>::_RegexMask std::__cxx11::regex_traits<char>::lookup_classname<char const*>(char const*, char const*, bool) const [53] std::__detail::_Scanner<char>::_M_scan_in_bracket()
+  [41] _GLOBAL__sub_I_info     [8] Position::winner(WinCon*) const [80] std::__detail::_Scanner<char>::_M_eat_escape_ecma()
+  [12] attacks_bb(PieceType, Square, unsigned int) [66] std::__cxx11::regex_traits<char>::_RegexMask std::__cxx11::regex_traits<char>::lookup_classname<char const*>(char const*, char const*, bool) const [53] std::__detail::_Scanner<char>::_M_scan_in_bracket()
   [60] void init_magic<(PieceType)3>(unsigned int*, Magic*) [33] std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > std::__cxx11::regex_traits<char>::transform_primary<char const*>(char const*, char const*) const [81] std::__detail::_Scanner<char>::_Scanner(char const*, char const*, std::regex_constants::syntax_option_type, std::locale)
   [31] void init_magic<(PieceType)5>(unsigned int*, Magic*) [40] std::__cxx11::regex_iterator<__gnu_cxx::__normal_iterator<char const*, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > >, char, std::__cxx11::regex_traits<char> >::operator==(std::__cxx11::regex_iterator<__gnu_cxx::__normal_iterator<char const*, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > >, char, std::__cxx11::regex_traits<char> > const&) const [52] std::__detail::_Compiler<std::__cxx11::regex_traits<char> >::_M_try_char()
-   [6] Move* generate_all<(MoveType)3>(Color, Position const&, Move*) [46] std::__cxx11::regex_token_iterator<__gnu_cxx::__normal_iterator<char const*, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > >, char, std::__cxx11::regex_traits<char> >::operator==(std::__cxx11::regex_token_iterator<__gnu_cxx::__normal_iterator<char const*, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > >, char, std::__cxx11::regex_traits<char> > const&) const [38] std::__detail::_Compiler<std::__cxx11::regex_traits<char> >::_M_assertion()
-   [5] generate_moves(Color, PieceType, Position const&, Move*) [54] std::_Hashtable<char, std::pair<char const, Piece>, std::allocator<std::pair<char const, Piece> >, std::__detail::_Select1st, std::equal_to<char>, std::hash<char>, std::__detail::_Mod_range_hashing, std::__detail::_Default_ranged_hash, std::__detail::_Prime_rehash_policy, std::__detail::_Hashtable_traits<false, false, true> >::_M_rehash(unsigned long, unsigned long const&) [56] std::__detail::_Compiler<std::__cxx11::regex_traits<char> >::_M_quantifier()
+   [7] Move* generate_all<(MoveType)3>(Color, Position const&, Move*) [46] std::__cxx11::regex_token_iterator<__gnu_cxx::__normal_iterator<char const*, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > >, char, std::__cxx11::regex_traits<char> >::operator==(std::__cxx11::regex_token_iterator<__gnu_cxx::__normal_iterator<char const*, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > >, char, std::__cxx11::regex_traits<char> > const&) const [38] std::__detail::_Compiler<std::__cxx11::regex_traits<char> >::_M_assertion()
+   [6] generate_moves(Color, PieceType, Position const&, Move*) [54] std::_Hashtable<char, std::pair<char const, Piece>, std::allocator<std::pair<char const, Piece> >, std::__detail::_Select1st, std::equal_to<char>, std::hash<char>, std::__detail::_Mod_range_hashing, std::__detail::_Default_ranged_hash, std::__detail::_Prime_rehash_policy, std::__detail::_Hashtable_traits<false, false, true> >::_M_rehash(unsigned long, unsigned long const&) [56] std::__detail::_Compiler<std::__cxx11::regex_traits<char> >::_M_quantifier()
   [29] unsigned int sliding_attack<(PieceType)3>(Square, unsigned int) [67] std::_Hashtable<char, std::pair<char const, Piece>, std::allocator<std::pair<char const, Piece> >, std::__detail::_Select1st, std::equal_to<char>, std::hash<char>, std::__detail::_Mod_range_hashing, std::__detail::_Default_ranged_hash, std::__detail::_Prime_rehash_policy, std::__detail::_Hashtable_traits<false, false, true> >::_Hashtable<std::pair<char const, Piece> const*>(std::pair<char const, Piece> const*, std::pair<char const, Piece> const*, unsigned long, std::hash<char> const&, std::equal_to<char> const&, std::allocator<std::pair<char const, Piece> > const&, std::integral_constant<bool, true>) [82] std::__detail::_Compiler<std::__cxx11::regex_traits<char> >::_M_alternative()
   [28] unsigned int sliding_attack<(PieceType)5>(Square, unsigned int) [43] std::_Deque_base<Move, std::allocator<Move> >::~_Deque_base() [83] std::__detail::_Compiler<std::__cxx11::regex_traits<char> >::_M_disjunction()
   [35] safe_destination(Square, int) [68] std::_Deque_base<std::__detail::_StateSeq<std::__cxx11::regex_traits<char> >, std::allocator<std::__detail::_StateSeq<std::__cxx11::regex_traits<char> > > >::~_Deque_base() [57] bool std::__detail::_Compiler<std::__cxx11::regex_traits<char> >::_M_expression_term<false, false>(std::__detail::_Compiler<std::__cxx11::regex_traits<char> >::_BracketState&, std::__detail::_BracketMatcher<std::__cxx11::regex_traits<char>, false, false>&)
-  [12] resolve(Position&)     [69] std::_Function_handler<bool (char), std::__detail::_BracketMatcher<std::__cxx11::regex_traits<char>, false, false> >::_M_manager(std::_Any_data&, std::_Any_data const&, std::_Manager_operation) [58] std::__detail::_Compiler<std::__cxx11::regex_traits<char> >::_M_bracket_expression()
-  [17] Move* generate<(MoveType)3, (Color)0>(Position const&, PieceType, Move*) [37] std::_Function_handler<bool (char), std::__detail::_BracketMatcher<std::__cxx11::regex_traits<char>, false, false> >::_M_invoke(std::_Any_data const&, char&&) [84] void std::__detail::_Compiler<std::__cxx11::regex_traits<char> >::_M_insert_bracket_matcher<false, false>(bool)
-  [27] Move* generate<(MoveType)3, (Color)1>(Position const&, PieceType, Move*) [70] std::_Sp_counted_ptr_inplace<std::__detail::_NFA<std::__cxx11::regex_traits<char> >, std::allocator<void>, (__gnu_cxx::_Lock_policy)2>::_M_destroy() [85] std::__detail::_Compiler<std::__cxx11::regex_traits<char> >::_M_pop()
+  [18] resolve(Position&)     [69] std::_Function_handler<bool (char), std::__detail::_BracketMatcher<std::__cxx11::regex_traits<char>, false, false> >::_M_manager(std::_Any_data&, std::_Any_data const&, std::_Manager_operation) [58] std::__detail::_Compiler<std::__cxx11::regex_traits<char> >::_M_bracket_expression()
+  [16] Move* generate<(MoveType)3, (Color)0>(Position const&, PieceType, Move*) [37] std::_Function_handler<bool (char), std::__detail::_BracketMatcher<std::__cxx11::regex_traits<char>, false, false> >::_M_invoke(std::_Any_data const&, char&&) [84] void std::__detail::_Compiler<std::__cxx11::regex_traits<char> >::_M_insert_bracket_matcher<false, false>(bool)
+  [17] Move* generate<(MoveType)3, (Color)1>(Position const&, PieceType, Move*) [70] std::_Sp_counted_ptr_inplace<std::__detail::_NFA<std::__cxx11::regex_traits<char> >, std::allocator<void>, (__gnu_cxx::_Lock_policy)2>::_M_destroy() [85] std::__detail::_Compiler<std::__cxx11::regex_traits<char> >::_M_pop()
   [61] split_fen(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&) [71] std::_Sp_counted_ptr_inplace<std::__detail::_NFA<std::__cxx11::regex_traits<char> >, std::allocator<void>, (__gnu_cxx::_Lock_policy)2>::_M_dispose() [59] std::__detail::_Compiler<std::__cxx11::regex_traits<char> >::_M_atom()
   [62] visit_seq_scheduler::calculate_shortest_path() [50] void std::vector<Piece, std::allocator<Piece> >::_M_realloc_insert<Piece const&>(__gnu_cxx::__normal_iterator<Piece*, std::vector<Piece, std::allocator<Piece> > >, Piece const&) [86] std::__detail::_Compiler<std::__cxx11::regex_traits<char> >::_Compiler(char const*, char const*, std::locale const&, std::regex_constants::syntax_option_type)
-   [8] visit_seq_scheduler::sort_arr(MoveList<(MoveType)3, (Color)0>&, Position&, int) [72] std::vector<Piece, std::allocator<Piece> >::~vector() [49] std::__detail::_Executor<__gnu_cxx::__normal_iterator<char const*, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > >, std::allocator<std::__cxx11::sub_match<__gnu_cxx::__normal_iterator<char const*, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > > > >, std::__cxx11::regex_traits<char>, true>::_M_rep_once_more(std::__detail::_Executor<__gnu_cxx::__normal_iterator<char const*, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > >, std::allocator<std::__cxx11::sub_match<__gnu_cxx::__normal_iterator<char const*, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > > > >, std::__cxx11::regex_traits<char>, true>::_Match_mode, long)
+   [3] visit_seq_scheduler::sort_arr(MoveList<(MoveType)3, (Color)0>&, Position&, int) [72] std::vector<Piece, std::allocator<Piece> >::~vector() [49] std::__detail::_Executor<__gnu_cxx::__normal_iterator<char const*, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > >, std::allocator<std::__cxx11::sub_match<__gnu_cxx::__normal_iterator<char const*, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > > > >, std::__cxx11::regex_traits<char>, true>::_M_rep_once_more(std::__detail::_Executor<__gnu_cxx::__normal_iterator<char const*, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > >, std::allocator<std::__cxx11::sub_match<__gnu_cxx::__normal_iterator<char const*, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > > > >, std::__cxx11::regex_traits<char>, true>::_Match_mode, long)
   [42] Piece::Piece(Color, PieceType) [47] std::vector<std::__cxx11::sub_match<__gnu_cxx::__normal_iterator<char const*, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > > >, std::allocator<std::__cxx11::sub_match<__gnu_cxx::__normal_iterator<char const*, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > > > > >::_M_fill_assign(unsigned long, std::__cxx11::sub_match<__gnu_cxx::__normal_iterator<char const*, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > > > const&) [36] std::__detail::_Executor<__gnu_cxx::__normal_iterator<char const*, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > >, std::allocator<std::__cxx11::sub_match<__gnu_cxx::__normal_iterator<char const*, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > > > >, std::__cxx11::regex_traits<char>, true>::_M_dfs(std::__detail::_Executor<__gnu_cxx::__normal_iterator<char const*, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > >, std::allocator<std::__cxx11::sub_match<__gnu_cxx::__normal_iterator<char const*, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > > > >, std::__cxx11::regex_traits<char>, true>::_Match_mode, long)
-   [4] solver::dfStack(Position, int, Move*) [51] void std::vector<std::__detail::_State<char>, std::allocator<std::__detail::_State<char> > >::_M_realloc_insert<std::__detail::_State<char> >(__gnu_cxx::__normal_iterator<std::__detail::_State<char>*, std::vector<std::__detail::_State<char>, std::allocator<std::__detail::_State<char> > > >, std::__detail::_State<char>&&) [32] bool std::binary_search<__gnu_cxx::__normal_iterator<char const*, std::vector<char, std::allocator<char> > >, char>(__gnu_cxx::__normal_iterator<char const*, std::vector<char, std::allocator<char> > >, __gnu_cxx::__normal_iterator<char const*, std::vector<char, std::allocator<char> > >, char const&)
+   [5] solver::dfStack(Position, int, Move*) [51] void std::vector<std::__detail::_State<char>, std::allocator<std::__detail::_State<char> > >::_M_realloc_insert<std::__detail::_State<char> >(__gnu_cxx::__normal_iterator<std::__detail::_State<char>*, std::vector<std::__detail::_State<char>, std::allocator<std::__detail::_State<char> > > >, std::__detail::_State<char>&&) [32] bool std::binary_search<__gnu_cxx::__normal_iterator<char const*, std::vector<char, std::allocator<char> > >, char>(__gnu_cxx::__normal_iterator<char const*, std::vector<char, std::allocator<char> > >, __gnu_cxx::__normal_iterator<char const*, std::vector<char, std::allocator<char> > >, char const&)
   [63] solver::solver(Position) [73] void std::vector<char, std::allocator<char> >::_M_realloc_insert<char>(__gnu_cxx::__normal_iterator<char*, std::vector<char, std::allocator<char> > >, char&&) [87] std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >* std::__do_uninit_copy<std::__cxx11::regex_token_iterator<__gnu_cxx::__normal_iterator<char const*, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > >, char, std::__cxx11::regex_traits<char> >, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >*>(std::__cxx11::regex_token_iterator<__gnu_cxx::__normal_iterator<char const*, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > >, char, std::__cxx11::regex_traits<char> >, std::__cxx11::regex_token_iterator<__gnu_cxx::__normal_iterator<char const*, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > >, char, std::__cxx11::regex_traits<char> >, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >*)
   [64] solver::~solver()      [74] void std::vector<unsigned long, std::allocator<unsigned long> >::_M_realloc_insert<unsigned long const&>(__gnu_cxx::__normal_iterator<unsigned long*, std::vector<unsigned long, std::allocator<unsigned long> > >, unsigned long const&) [34] __gnu_cxx::__normal_iterator<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const*, std::vector<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, std::allocator<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > > > > std::find<__gnu_cxx::__normal_iterator<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const*, std::vector<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, std::allocator<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > > > >, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > >(__gnu_cxx::__normal_iterator<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const*, std::vector<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, std::allocator<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > > > >, __gnu_cxx::__normal_iterator<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const*, std::vector<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, std::allocator<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > > > >, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&)
-  [65] Position::add_collection(Piece*, unsigned long) [45] std::__cxx11::regex_token_iterator<__gnu_cxx::__normal_iterator<char const*, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > >, char, std::__cxx11::regex_traits<char> >::regex_token_iterator(std::__cxx11::regex_token_iterator<__gnu_cxx::__normal_iterator<char const*, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > >, char, std::__cxx11::regex_traits<char> > const&) [9] operator==(Position const&, Position const&)
-  [15] Position::place_piece_at(Piece const&, Square) [75] std::__detail::_BracketMatcher<std::__cxx11::regex_traits<char>, false, false>::_M_ready() [44] operator<<(std::ostream&, Move const&)
-  [14] Position::remove_piece_at(Square) [48] bool std::__detail::__regex_algo_impl<__gnu_cxx::__normal_iterator<char const*, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > >, std::allocator<std::__cxx11::sub_match<__gnu_cxx::__normal_iterator<char const*, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > > > >, char, std::__cxx11::regex_traits<char> >(__gnu_cxx::__normal_iterator<char const*, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > >, __gnu_cxx::__normal_iterator<char const*, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > >, std::__cxx11::match_results<__gnu_cxx::__normal_iterator<char const*, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > >, std::allocator<std::__cxx11::sub_match<__gnu_cxx::__normal_iterator<char const*, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > > > > >&, std::__cxx11::basic_regex<char, std::__cxx11::regex_traits<char> > const&, std::regex_constants::match_flag_type, std::__detail::_RegexExecutorPolicy, bool) [39] operator<<(std::ostream&, Square const&)
-  [30] Position::clear()      [76] std::__detail::_NFA<std::__cxx11::regex_traits<char> >::_M_insert_repeat(long, long, bool) [16] _init
-  [11] Position::do_move(Move const&) [77] std::__detail::_NFA<std::__cxx11::regex_traits<char> >::_M_insert_matcher(std::function<bool (char)>) [19] <cycle 1>
-  [18] Position::readFEN(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >) [78] std::__detail::_NFA<std::__cxx11::regex_traits<char> >::_M_insert_subexpr_end() [2] <cycle 2>
-   [3] visit_seq_scheduler::min_route_estimate(Position const&) const [79] std::__detail::_NFA<std::__cxx11::regex_traits<char> >::_M_insert_subexpr_begin()
-  [10] Position::subordinates(Color, PieceType) const [55] std::__detail::_Scanner<char>::_M_scan_normal()
+  [65] Position::add_collection(Piece*, unsigned long) [45] std::__cxx11::regex_token_iterator<__gnu_cxx::__normal_iterator<char const*, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > >, char, std::__cxx11::regex_traits<char> >::regex_token_iterator(std::__cxx11::regex_token_iterator<__gnu_cxx::__normal_iterator<char const*, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > >, char, std::__cxx11::regex_traits<char> > const&) [11] operator==(Position const&, Position const&)
+  [14] Position::place_piece_at(Piece const&, Square) [75] std::__detail::_BracketMatcher<std::__cxx11::regex_traits<char>, false, false>::_M_ready() [44] operator<<(std::ostream&, Move const&)
+  [15] Position::remove_piece_at(Square) [48] bool std::__detail::__regex_algo_impl<__gnu_cxx::__normal_iterator<char const*, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > >, std::allocator<std::__cxx11::sub_match<__gnu_cxx::__normal_iterator<char const*, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > > > >, char, std::__cxx11::regex_traits<char> >(__gnu_cxx::__normal_iterator<char const*, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > >, __gnu_cxx::__normal_iterator<char const*, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > >, std::__cxx11::match_results<__gnu_cxx::__normal_iterator<char const*, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > >, std::allocator<std::__cxx11::sub_match<__gnu_cxx::__normal_iterator<char const*, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > > > > >&, std::__cxx11::basic_regex<char, std::__cxx11::regex_traits<char> > const&, std::regex_constants::match_flag_type, std::__detail::_RegexExecutorPolicy, bool) [39] operator<<(std::ostream&, Square const&)
+  [30] Position::clear()      [76] std::__detail::_NFA<std::__cxx11::regex_traits<char> >::_M_insert_repeat(long, long, bool) [13] _init
+  [10] Position::do_move(Move const&) [77] std::__detail::_NFA<std::__cxx11::regex_traits<char> >::_M_insert_matcher(std::function<bool (char)>) [20] <cycle 1>
+  [19] Position::readFEN(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >) [78] std::__detail::_NFA<std::__cxx11::regex_traits<char> >::_M_insert_subexpr_end() [2] <cycle 2>
+   [4] visit_seq_scheduler::min_route_estimate(Position const&) const [79] std::__detail::_NFA<std::__cxx11::regex_traits<char> >::_M_insert_subexpr_begin()
+   [9] Position::subordinates(Color, PieceType) const [55] std::__detail::_Scanner<char>::_M_scan_normal()

@@ -2,8 +2,6 @@
 
 #include<cassert>
 
-typedef pair<int, Move> weighted_move;
-
 visit_seq_scheduler::visit_seq_scheduler(Position pos):
     base_position(pos)
 {
@@ -71,28 +69,47 @@ bool visit_seq_scheduler::cmp_move(const Move& move1, const Move& move2){
     return estimate_1 < estimate_2;
 }
 
-void visit_seq_scheduler::sort_seq(MoveList<All, Black>& visit_seq,  Position pos){
-    
+inline void swap_move( Move* a, Move* b ){
+    Move c = *a;
+    *a = *b;
+    *b = c;
+}
+
+int visit_seq_scheduler::sort_arr(MoveList<All, Black>& visit_seq, Position &pos, int depth_limit){
+    int valid_moves = 0;
     base_position = pos;
 
-    // weighted_move sorted_seq[ visit_seq.size() ];
-    // for(int i=0; i<visit_seq.size(); i++){
-    //     Position nx_pos(pos);
-    //     nx_pos.do_move(visit_seq[i]);
-    //     sorted_seq[i] = weighted_move( min_step_estimate( nx_pos ), visit_seq[i] );
-    // }
+    static int scores[SQUARE_NB];
+    
+    for(int i=0; i<visit_seq.size(); i++){
+        Position pos_cur(pos);
+        pos_cur.do_move( visit_seq[i] );
+        scores[i] = min_step_estimate(pos_cur);
+    }
 
-    // sort(sorted_seq, sorted_seq + visit_seq.size());
-
-    // for(int i=0; i<visit_seq.size(); i++){
-    //     visit_seq[i] = sorted_seq[i].second;
-    // }
-
-    sort(visit_seq.begin(), visit_seq.end(), 
-        [this](const Move& m1, const Move& m2) {
-            return cmp_move(m1, m2);
+    for(int j=0; j<visit_seq.size(); j++){
+        
+        if(scores[j] <= depth_limit)
+            valid_moves++;
+        else{
+            continue;
         }
-    );
+
+        swap_move( visit_seq.begin() + j,\
+                 visit_seq.begin() + valid_moves-1);
+        swap(scores[j], scores[valid_moves-1]);
+
+        for(int i=valid_moves-1; i>0; i--){
+            if( scores[i] < scores[i-1] ){
+                swap_move(visit_seq.begin() + i, visit_seq.begin() + i-1);
+                swap(scores[i], scores[i-1]);
+            }
+            else{
+                break;
+            }
+        }
+    }
+    return valid_moves;
 }
 
 int rough_estimate(Position pos){
@@ -109,14 +126,6 @@ int visit_seq_scheduler::min_route_estimate(const Position& pos) const{
 
     // int shortest_path[SQUARE_NB* SQUARE_NB];
     bool black_Chariot_exist = (pos.count(Black, Chariot) > 0);
-
-    if(USE_DEBUG){
-        for(Square sq: BoardView(all_pieces)){
-            debug<< sq<< " ";
-        }
-        debug <<endl;
-    }
-
 
     for(Square sq_a: BoardView(all_pieces)){
             
@@ -156,16 +165,22 @@ int visit_seq_scheduler::min_route_estimate(const Position& pos) const{
             }
 
             total_dis[dis_cnt++] = piece_distance;
-            
-            if(USE_DEBUG){
-                debug << "stones" <<endl;
-                debug << sq_a << sq_b<< endl;
-                debug << "dis:" << piece_distance <<endl;
+        }
+    }
+
+    // sort(total_dis, total_dis + dis_cnt);
+
+    for(int i=0; i<dis_cnt; i++){
+        for(int j=i; j>0; j--){
+            if(total_dis[j] < total_dis[j-1]){
+                swap(total_dis[j], total_dis[j-1]);
+            }
+            else{
+                break;
             }
         }
     }
 
-    sort(total_dis, total_dis + dis_cnt);
     int move_estimate = 0;
     for(int i=0; i<num_red; i++){
         move_estimate += total_dis[i];
@@ -175,7 +190,6 @@ int visit_seq_scheduler::min_route_estimate(const Position& pos) const{
 }
 
 int visit_seq_scheduler::min_step_estimate(Position pos){
-    
     int estimate = min_route_estimate(pos);
     assert(estimate >= 0);
     return estimate;
@@ -264,10 +278,20 @@ bool solver::dfStack(Position start_pos, int limit_depth, Move* moves){
     prv_positions[0] = (start_pos);
     MoveList<All, Black> first_moves(start_pos);
 
-    seq_scheduler->sort_seq(first_moves, start_pos);
+    int first_move_size = seq_scheduler->sort_arr(first_moves, start_pos, limit_depth);
 
-    for(Move first_move: first_moves){
-        search_space.push( first_move );
+
+    if(USE_DEBUG){
+        debug <<"depth "<< 0 <<"/" <<limit_depth <<endl;
+        debug <<"generated moves: " << first_move_size <<endl;
+        for(int i=0; i<first_move_size; i++){
+            debug<<"\t\t" <<first_moves[i];
+        }
+        debug <<endl;
+    }
+
+    for(int i=0; i<first_move_size; i++){
+        search_space.push( first_moves[i] );
         layer_cnt[0]++;
     }
     
@@ -293,28 +317,40 @@ bool solver::dfStack(Position start_pos, int limit_depth, Move* moves){
         moves[depth-1] = action_cur;
 
 
-        // if(USE_DEBUG){
-        //     for(int i=0;i<depth;i++){
-        //         debug << moves[i]<<" / ";
-        //     }
-        //     debug << endl;
-        // }
+        if(USE_DEBUG){
+            debug <<"depth "<<depth <<"/" <<limit_depth <<endl;
+            for(int i=0;i<depth;i++){
+                debug <<"\t" << i <<": " << moves[i];
+            }
+            debug << endl;
+        }
 
         if( current_pos.winner() == Black and depth <= limit_depth){
             return true;
         }
-        record(current_pos, limit_depth - depth);
+        // record(current_pos, limit_depth - depth);
 
         if( depth < limit_depth){
             MoveList<All, Black> nx_moves(current_pos);
             
-            seq_scheduler->sort_seq(nx_moves, current_pos);
+            int nx_moves_size = seq_scheduler->sort_arr(nx_moves, current_pos, limit_depth - depth -1);
 
             // search_space.push(END);
             prv_positions[depth] = (current_pos);
             layer_cnt[depth] = 0; // initialize cnt for layer depth+1
-            for(Move nx_move: nx_moves){
-                // Move nx_move = nx_moves[move_idx];
+
+            if(USE_DEBUG){
+                debug <<"generated next:" << nx_moves_size <<endl;
+
+                for(int i=0; i<nx_moves_size ; i++){
+                    debug <<"\t\t" << nx_moves[i];
+                }
+                cout<<endl;
+
+            }
+            
+            for(int move_idx = 0; move_idx < nx_moves_size; move_idx++){
+                Move nx_move = nx_moves[move_idx];
                 Position nx_state(current_pos);
                 nx_state.do_move(nx_move);
                 // if(is_visited(nx_state, limit_depth - depth - 1)){
@@ -332,10 +368,13 @@ bool solver::dfStack(Position start_pos, int limit_depth, Move* moves){
                     is_new_state &= (prv_positions[i] != nx_state);
                 }
                 
-                if( seq_scheduler->min_step_estimate(nx_state) + depth + 1 > limit_depth ){
-                    continue;
-                }
-
+                // if( seq_scheduler->min_step_estimate(nx_state) + depth + 1 > limit_depth ){
+                //     // break;
+                //     debug <<"ERROR at depth " <<depth <<" and limit "<< limit_depth <<endl;
+                //     debug <<"board: " << nx_state <<endl;
+                //     assert(1>2);
+                // }
+                
                 if(!is_new_state)
                     continue;
 

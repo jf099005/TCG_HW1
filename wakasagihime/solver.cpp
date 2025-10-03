@@ -31,7 +31,7 @@ void resolve(Position &pos)
     Move opt_path[MAX_MOVE_NUM];
     solver s(pos);
     
-    if(OUTPUT_BOARD){
+    if(OUTPUT_BOARD or USE_DEBUG){
         debug << pos <<endl;
         debug <<"num of C:" <<pos.count(Black, Chariot) <<endl;
         debug << "min step estimate:" << s.seq_scheduler->min_step_estimate(pos) <<endl;
