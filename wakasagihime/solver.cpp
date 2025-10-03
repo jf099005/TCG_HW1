@@ -3,7 +3,7 @@
 // #include "IDS_solver/DFS_solver.h"
 #include "memorize_version/DFS_solver.h"
 #include <chrono>
-#define OUTPUT_BOARD true
+#define OUTPUT_BOARD false
 using namespace std::chrono;
 
 /*
@@ -34,7 +34,7 @@ void resolve(Position &pos)
     if(OUTPUT_BOARD){
         debug << pos <<endl;
         debug <<"num of C:" <<pos.count(Black, Chariot) <<endl;
-        // debug << "min step estimate:" << s.seq_scheduler->min_step_estimate(pos) <<endl;
+        debug << "min step estimate:" << s.seq_scheduler->min_step_estimate(pos) <<endl;
     }
     int opt_path_len = -1;
     int L=0, R=30;

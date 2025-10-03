@@ -15,11 +15,10 @@
 
 using namespace std;
 
-bool operator == (const Position& a, const Position& b);
+typedef pair<int, Move> weighted_move;
 
-inline bool operator < (const PieceType& a, const PieceType& b){
-    return b > a;
-}
+bool operator == (const Position& a, const Position& b);
+bool operator > (const Position& a, const Position& b);
 
 inline int lowbit(int x){
     return x&-x;
@@ -59,8 +58,8 @@ class visit_seq_scheduler{
     public:
         visit_seq_scheduler(Position pos);
         void sort_seq(MoveList<All, Black>& visit_seq, Position pos);
-        bool cmp_move(const Move& move1, const Move& move2) const;
-        int min_step_estimate(Position pos) const;
+        bool cmp_move(const Move& move1, const Move& move2);
+        int min_step_estimate(Position pos);
         void calculate_shortest_path();
         inline int shortest_path(Square a, Square b) const{
             return _shortest_path[a*SQUARE_NB + b];
@@ -74,7 +73,7 @@ class visit_seq_scheduler{
         inline int represent(int a, int b) const{
             return a*SQUARE_NB + b;
         }
-        int min_route_estimate(Position pos) const;
+        int min_route_estimate(const Position& pos) const;
 };
 
 

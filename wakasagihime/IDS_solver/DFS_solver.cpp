@@ -62,14 +62,17 @@ void visit_seq_scheduler::calculate_shortest_path(){
 
 }
 
-bool visit_seq_scheduler::cmp_move(const Move& move1, const Move& move2) const{
+bool visit_seq_scheduler::cmp_move(const Move& move1, const Move& move2){
     Position pos1(base_position), pos2(base_position);
     pos1.do_move(move1);
     pos2.do_move(move2);
-    return min_step_estimate(pos1) < min_step_estimate(pos2);
+    int estimate_1 = min_step_estimate(pos1);
+    int estimate_2 = min_step_estimate(pos2);
+    return estimate_1 < estimate_2;
 }
 
 void visit_seq_scheduler::sort_seq(MoveList<All, Black>& visit_seq,  Position pos){
+    
     base_position = pos;
 
     // weighted_move sorted_seq[ visit_seq.size() ];
@@ -97,20 +100,28 @@ int rough_estimate(Position pos){
     return num_bits(pieces);
 }
 
-int visit_seq_scheduler::min_route_estimate(Position pos) const{
+int visit_seq_scheduler::min_route_estimate(const Position& pos) const{
     static short total_dis[1000];
     int dis_cnt = 0;
-    int num_red = num_bits(pos.pieces(Red));
+    int num_red = pos.count(Red);//num_bits(pos.pieces(Red));
 
-    auto all_pieces = BoardView(pos.pieces());
+    Board all_pieces = (pos.pieces());
 
     // int shortest_path[SQUARE_NB* SQUARE_NB];
-    bool black_Chariot_exist = pos.count(Black, Chariot);
+    bool black_Chariot_exist = (pos.count(Black, Chariot) > 0);
 
-    for(Square sq_a: all_pieces){
+    if(USE_DEBUG){
+        for(Square sq: BoardView(all_pieces)){
+            debug<< sq<< " ";
+        }
+        debug <<endl;
+    }
+
+
+    for(Square sq_a: BoardView(all_pieces)){
             
-        for(Square sq_b: all_pieces){
-            if(sq_a <= sq_b)
+        for(Square sq_b: BoardView(all_pieces)){
+            if(int(sq_a) <= int(sq_b))
                 continue;
 
             Piece a = pos.peek_piece_at(sq_a), b = pos.peek_piece_at(sq_b);
@@ -127,22 +138,30 @@ int visit_seq_scheduler::min_route_estimate(Position pos) const{
                 swap(a,b);
             }
 
-            if(b.type > a.type and b.type != a.type){
+            if( !(a.type > b.type) and a.side == Black){
                 continue;
             }
 
             int piece_distance = shortest_path(sq_a, sq_b);//distance<Square> (sq_a, sq_b);
 
-            if(a.type == Chariot){
+            if(a.type == Chariot and a.side == Black){
                 piece_distance = 2 - (sq_a%8 == sq_b%8) - (sq_a/8 == sq_b/8);
+                // (distance<Rank>(sq_a, sq_b) > 0) + ( distance<File>(sq_a, sq_b) > 0 );//
             }
 
             if(black_Chariot_exist and a.side != Black and\
                              Chariot > a.type and Chariot > b.type){
+                // piece_distance = (distance<Rank>(sq_a, sq_b) > 0) + ( distance<File>(sq_a, sq_b) > 0 );//2 - (sq_a%8 == sq_b%8) - (sq_a/8 == sq_b/8);
                 piece_distance = 2 - (sq_a%8 == sq_b%8) - (sq_a/8 == sq_b/8);
             }
 
             total_dis[dis_cnt++] = piece_distance;
+            
+            if(USE_DEBUG){
+                debug << "stones" <<endl;
+                debug << sq_a << sq_b<< endl;
+                debug << "dis:" << piece_distance <<endl;
+            }
         }
     }
 
@@ -155,8 +174,11 @@ int visit_seq_scheduler::min_route_estimate(Position pos) const{
     return move_estimate;
 }
 
-int visit_seq_scheduler::min_step_estimate(Position pos) const{
-    return min_route_estimate(pos);
+int visit_seq_scheduler::min_step_estimate(Position pos){
+    
+    int estimate = min_route_estimate(pos);
+    assert(estimate >= 0);
+    return estimate;
 }
 
 
@@ -183,6 +205,20 @@ bool operator == (const Position& A, const Position& B){
     }
     return A.due_up() == B.due_up();
 }
+
+
+bool operator < (const Position& A, const Position& B){
+    for (Square sq = SQ_A1; sq < SQUARE_NB; sq += 1) {
+        Piece a = A.peek_piece_at(sq);
+        Piece b = B.peek_piece_at(sq);
+        if(char(a) != char(b)){
+            return char(a) < char(b);
+        }
+    }
+    return A.due_up() <  B.due_up();
+}
+
+
 
 bool operator != (const Position& A, const Position& B){
     return !( A==B );
@@ -214,6 +250,8 @@ bool solver::dfStack(Position start_pos, int limit_depth, Move* moves){
     if(start_pos.winner() == Black){
         return true;
     }
+    if(limit_depth == 0)
+        return false;
     stack<Move> search_space;
     //top is the number of members of current stack top of the current top of search_space
     int layer_cnt[MAX_MOVE_NUM];
@@ -226,9 +264,10 @@ bool solver::dfStack(Position start_pos, int limit_depth, Move* moves){
     prv_positions[0] = (start_pos);
     MoveList<All, Black> first_moves(start_pos);
 
+    seq_scheduler->sort_seq(first_moves, start_pos);
 
-    for(int i=0; i<first_moves.size(); i++){
-        search_space.push( first_moves[i] );
+    for(Move first_move: first_moves){
+        search_space.push( first_move );
         layer_cnt[0]++;
     }
     
@@ -237,9 +276,8 @@ bool solver::dfStack(Position start_pos, int limit_depth, Move* moves){
     //prv_positions[d]: state at Depth = d
     while(!search_space.empty()){
         assert(0< depth);
-        assert(search_space.size() > 0);
         
-        // assert(depth <= limit_depth);
+        assert(depth <= limit_depth);
         if(layer_cnt[depth-1] == 0){
             depth--;
             continue;
@@ -255,12 +293,12 @@ bool solver::dfStack(Position start_pos, int limit_depth, Move* moves){
         moves[depth-1] = action_cur;
 
 
-        if(USE_DEBUG){
-            for(int i=0;i<depth;i++){
-                debug << moves[i]<<" / ";
-            }
-            debug << endl;
-        }
+        // if(USE_DEBUG){
+        //     for(int i=0;i<depth;i++){
+        //         debug << moves[i]<<" / ";
+        //     }
+        //     debug << endl;
+        // }
 
         if( current_pos.winner() == Black and depth <= limit_depth){
             return true;
@@ -275,13 +313,13 @@ bool solver::dfStack(Position start_pos, int limit_depth, Move* moves){
             // search_space.push(END);
             prv_positions[depth] = (current_pos);
             layer_cnt[depth] = 0; // initialize cnt for layer depth+1
-            for(int move_idx = 0; move_idx < nx_moves.size(); move_idx++){
-                Move nx_move = nx_moves[move_idx];
+            for(Move nx_move: nx_moves){
+                // Move nx_move = nx_moves[move_idx];
                 Position nx_state(current_pos);
                 nx_state.do_move(nx_move);
-                if(is_visited(nx_state, limit_depth - depth - 1)){
-                    continue;
-                }
+                // if(is_visited(nx_state, limit_depth - depth - 1)){
+                //     continue;
+                // }
 
                 if(nx_state.winner() == Black){
                     moves[depth] = nx_move;
