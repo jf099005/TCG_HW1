@@ -79,7 +79,7 @@ bool solver::IDS(Position start_pos, int limit_depth, Move* moves){
     prv_positions[0] = (start_pos);
     MoveList<All, Black> first_moves(start_pos);
 
-    int first_move_size = seq_scheduler->sort_arr(first_moves, start_pos, limit_depth);
+    int first_move_size = seq_scheduler->sort_arr(first_moves, start_pos, limit_depth - 1);
 
 
     if(USE_DEBUG){
@@ -127,6 +127,7 @@ bool solver::IDS(Position start_pos, int limit_depth, Move* moves){
         if( current_pos.winner() == Black and depth <= limit_depth){
             return true;
         }
+
         // record(current_pos, limit_depth - depth);
 
         if( depth < limit_depth){
@@ -145,13 +146,16 @@ bool solver::IDS(Position start_pos, int limit_depth, Move* moves){
                     debug <<"\t\t" << nx_moves[i];
                 }
                 cout<<endl;
-
             }
             
             for(int move_idx = 0; move_idx < nx_moves_size; move_idx++){
                 Move nx_move = nx_moves[move_idx];
                 Position nx_state(current_pos);
                 nx_state.do_move(nx_move);
+
+                // if(is_visited(nx_state, limit_depth - depth - 1)){
+                //     continue;
+                // }
 
                 if(nx_state.winner() == Black){
                     moves[depth] = nx_move;

@@ -1,5 +1,6 @@
 #include"search_sequence_scheduler.h"
 
+#include<queue>
 #include<cassert>
 
 visit_seq_scheduler::visit_seq_scheduler(Position pos):
@@ -8,9 +9,9 @@ visit_seq_scheduler::visit_seq_scheduler(Position pos):
     calculate_shortest_path();
 };
 
-void visit_seq_scheduler::calculate_shortest_path(){
-    static const int inf = 40;
+static const int inf = 40;
 
+void visit_seq_scheduler::calculate_shortest_path(){
     for(int i=0; i< SQUARE_NB*SQUARE_NB; i++){
         _shortest_path[i] = inf;
     }
@@ -118,74 +119,69 @@ int rough_estimate(Position pos){
 }
 
 int visit_seq_scheduler::min_route_estimate(const Position& pos) const{
-    static short total_dis[1000];
-    int dis_cnt = 0;
+    static short min_dis[SQUARE_NB + 5];
     int num_red = pos.count(Red);//num_bits(pos.pieces(Red));
 
-    Board all_pieces = (pos.pieces());
+    std::fill_n(min_dis, num_red, inf);
+    
+    Board Red_pieces = (pos.pieces(Red));
+    Board Black_pieces = (pos.pieces(Black));
+    // Board all_pieces = (pos.pieces());
 
     // int shortest_path[SQUARE_NB* SQUARE_NB];
     bool black_Chariot_exist = (pos.count(Black, Chariot) > 0);
 
-    for(Square sq_a: BoardView(all_pieces)){
-            
-        for(Square sq_b: BoardView(all_pieces)){
+    for(Square sq_a: BoardView(Red_pieces)){
+        for(Square sq_b: BoardView(Red_pieces)){
             if(int(sq_a) <= int(sq_b))
                 continue;
 
             Piece a = pos.peek_piece_at(sq_a), b = pos.peek_piece_at(sq_b);
-            
-            if(a.side==Black and b.side==Black){
-                continue;
-            }
-            
-            if( a.type==Duck || b.type==Duck){
-                continue;
+            int piece_distance = shortest_path(sq_a, sq_b);//distance<Square> (sq_a, sq_b);
+            if(black_Chariot_exist and\
+                             Chariot > a.type and Chariot > b.type){
+                piece_distance = 2 - (sq_a%8 == sq_b%8) - (sq_a/8 == sq_b/8);
             }
 
-            if(b.side == Black){
-                swap(a,b);
-            }
+            if(min_dis[num_red - 1] > piece_distance){
+                min_dis[num_red-1] = piece_distance;
+                for(int j=num_red-1; j > 0; j--){
+                    if(min_dis[j] < min_dis[j-1]){
+                        swap(min_dis[j], min_dis[j-1]);
+                    }
+                }
+            }            
+        }
+    }
 
-            if( !(a.type > b.type) and a.side == Black){
+
+    for(Square sq_a: BoardView(Black_pieces)){
+            
+        for(Square sq_b: BoardView(Red_pieces)){
+            Piece a = pos.peek_piece_at(sq_a), b = pos.peek_piece_at(sq_b);
+
+            if( !(a.type > b.type) ){
                 continue;
             }
 
             int piece_distance = shortest_path(sq_a, sq_b);//distance<Square> (sq_a, sq_b);
 
-            if(a.type == Chariot and a.side == Black){
-                piece_distance = 2 - (sq_a%8 == sq_b%8) - (sq_a/8 == sq_b/8);
-                // (distance<Rank>(sq_a, sq_b) > 0) + ( distance<File>(sq_a, sq_b) > 0 );//
-            }
-
-            if(black_Chariot_exist and a.side != Black and\
-                             Chariot > a.type and Chariot > b.type){
-                // piece_distance = (distance<Rank>(sq_a, sq_b) > 0) + ( distance<File>(sq_a, sq_b) > 0 );//2 - (sq_a%8 == sq_b%8) - (sq_a/8 == sq_b/8);
+            if(a.type == Chariot){
                 piece_distance = 2 - (sq_a%8 == sq_b%8) - (sq_a/8 == sq_b/8);
             }
 
-            total_dis[dis_cnt++] = piece_distance;
+            if(min_dis[num_red - 1] > piece_distance){
+                min_dis[num_red-1] = piece_distance;
+                for(int j=num_red-1; j > 0; j--){
+                    if(min_dis[j] < min_dis[j-1]){
+                        swap(min_dis[j], min_dis[j-1]);
+                    }
+                }
+            }
+            
         }
     }
-
-    // sort(total_dis, total_dis + dis_cnt);
-
-    for(int i=0; i<dis_cnt; i++){
-        for(int j=i; j>0; j--){
-            if(total_dis[j] < total_dis[j-1]){
-                swap(total_dis[j], total_dis[j-1]);
-            }
-            else{
-                break;
-            }
-        }
-    }
-
-    int move_estimate = 0;
-    for(int i=0; i<num_red; i++){
-        move_estimate += total_dis[i];
-    }
-
+    int move_estimate = std::accumulate(min_dis, min_dis + num_red, 0);
     return move_estimate;
 }
 
