@@ -114,8 +114,7 @@ bool solver::IDS(Position start_pos, int limit_depth, Move* moves){
         current_pos.do_move( action_cur );
 
         moves[depth-1] = action_cur;
-
-
+        
         if(USE_DEBUG){
             debug <<"depth "<<depth <<"/" <<limit_depth <<endl;
             for(int i=0;i<depth;i++){
