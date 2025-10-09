@@ -67,10 +67,10 @@ bool solver::IDS(Position start_pos, int limit_depth, Move* moves){
     }
     if(limit_depth == 0)
         return false;
-    stack<Move> search_space;
+    static stack<Move> search_space;
     //top is the number of members of current stack top of the current top of search_space
-    int layer_cnt[MAX_MOVE_NUM];
-    Position prv_positions[MAX_MOVE_NUM];
+    static int layer_cnt[MAX_MOVE_NUM];
+    static Position prv_positions[MAX_MOVE_NUM];
     
     //top is the root(previous state) of the current stack top of search_space
     
@@ -97,6 +97,7 @@ bool solver::IDS(Position start_pos, int limit_depth, Move* moves){
     }
     
     int depth = 1;
+    int mx_dep = MAX_MOVES;
     while(!search_space.empty()){
         assert(0< depth);
         

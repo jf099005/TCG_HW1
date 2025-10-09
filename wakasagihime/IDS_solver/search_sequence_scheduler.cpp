@@ -65,8 +65,8 @@ bool visit_seq_scheduler::cmp_move(const Move& move1, const Move& move2){
     Position pos1(base_position), pos2(base_position);
     pos1.do_move(move1);
     pos2.do_move(move2);
-    int estimate_1 = min_step_estimate(pos1);
-    int estimate_2 = min_step_estimate(pos2);
+    int estimate_1 = min_route_estimate(pos1);
+    int estimate_2 = min_route_estimate(pos2);
     return estimate_1 < estimate_2;
 }
 
@@ -85,7 +85,7 @@ int visit_seq_scheduler::sort_arr(MoveList<All, Black>& visit_seq, Position &pos
     for(int i=0; i<visit_seq.size(); i++){
         Position pos_cur(pos);
         pos_cur.do_move( visit_seq[i] );
-        scores[i] = min_step_estimate(pos_cur);
+        scores[i] = min_route_estimate(pos_cur);
     }
 
     for(int j=0; j<visit_seq.size(); j++){
