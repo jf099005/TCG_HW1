@@ -81,16 +81,6 @@ bool solver::IDS(Position start_pos, int limit_depth, Move* moves){
 
     int first_move_size = seq_scheduler->sort_arr(first_moves, start_pos, limit_depth - 1);
 
-
-    if(USE_DEBUG){
-        debug <<"depth "<< 0 <<"/" <<limit_depth <<endl;
-        debug <<"generated moves: " << first_move_size <<endl;
-        for(int i=0; i<first_move_size; i++){
-            debug<<"\t\t" <<first_moves[i];
-        }
-        debug <<endl;
-    }
-
     for(int i=0; i<first_move_size; i++){
         search_space.push( first_moves[i] );
         layer_cnt[0]++;
@@ -115,14 +105,6 @@ bool solver::IDS(Position start_pos, int limit_depth, Move* moves){
         current_pos.do_move( action_cur );
 
         moves[depth-1] = action_cur;
-        
-        if(USE_DEBUG){
-            debug <<"depth "<<depth <<"/" <<limit_depth <<endl;
-            for(int i=0;i<depth;i++){
-                debug <<"\t" << i <<": " << moves[i];
-            }
-            debug << endl;
-        }
 
         if( current_pos.winner() == Black and depth <= limit_depth){
             return true;
@@ -139,15 +121,6 @@ bool solver::IDS(Position start_pos, int limit_depth, Move* moves){
             prv_positions[depth] = (current_pos);
             layer_cnt[depth] = 0; // initialize cnt for layer depth+1
 
-            if(USE_DEBUG){
-                debug <<"generated next:" << nx_moves_size <<endl;
-
-                for(int i=0; i<nx_moves_size ; i++){
-                    debug <<"\t\t" << nx_moves[i];
-                }
-                cout<<endl;
-            }
-            
             for(int move_idx = 0; move_idx < nx_moves_size; move_idx++){
                 Move nx_move = nx_moves[move_idx];
                 Position nx_state(current_pos);

@@ -1,7 +1,6 @@
 #include "solver.h"
 #include "lib/helper.h"
-// #include "IDS_solver/DFS_solver.h"
-#include "memorize_version/DFS_solver.h"
+#include "IDS_solver/DFS_solver.h"
 #include <chrono>
 #define OUTPUT_BOARD false
 using namespace std::chrono;
@@ -31,18 +30,9 @@ void resolve(Position &pos)
     Move opt_path[MAX_MOVE_NUM];
     solver s(pos);
     
-    if(OUTPUT_BOARD or USE_DEBUG){
-        debug << pos <<endl;
-        debug <<"num of C:" <<pos.count(Black, Chariot) <<endl;
-        debug << "min step estimate:" << s.seq_scheduler->min_step_estimate(pos) <<endl;
-    }
     int opt_path_len = -1;
     int L=0, R=30;
     for(int d=L;d<=R;d++){
-        
-        if(OUTPUT_BOARD){
-            debug << "search with depth " << d <<"..." <<endl;
-        }
         bool result = s.IDS(pos, d, opt_path);
         if(result){
             opt_path_len = d;
