@@ -119,10 +119,26 @@ int rough_estimate(Position pos){
 }
 
 int visit_seq_scheduler::min_route_estimate(const Position& pos) const{
-    static short min_dis[SQUARE_NB + 5];
+    // static short min_dis[SQUARE_NB + 5];
     int num_red = pos.count(Red);//num_bits(pos.pieces(Red));
 
-    std::fill_n(min_dis, num_red, inf);
+    static struct Move_information{
+        Square from, to;
+        int cost;
+        Move_information(Square f, Square t, int c):
+            from(f), to(t), cost(c)
+        {}
+        Move_information()
+        {};
+
+        bool operator < (const Move_information& other){
+            return cost <= other.cost;
+        }
+    }
+    path_info[1000];
+    int path_size = 0;
+    
+    // std::fill_n(min_dis, num_red, inf);
     
     Board Red_pieces = (pos.pieces(Red));
     Board Black_pieces = (pos.pieces(Black));
@@ -142,15 +158,7 @@ int visit_seq_scheduler::min_route_estimate(const Position& pos) const{
                              Chariot > a.type and Chariot > b.type){
                 piece_distance = 2 - (sq_a%8 == sq_b%8) - (sq_a/8 == sq_b/8);
             }
-
-            if(min_dis[num_red - 1] > piece_distance){
-                min_dis[num_red-1] = piece_distance;
-                for(int j=num_red-1; j > 0; j--){
-                    if(min_dis[j] < min_dis[j-1]){
-                        swap(min_dis[j], min_dis[j-1]);
-                    }
-                }
-            }            
+            path_info[path_size++] = Move_information(sq_a, sq_b, piece_distance);
         }
     }
 
@@ -169,19 +177,40 @@ int visit_seq_scheduler::min_route_estimate(const Position& pos) const{
             if(a.type == Chariot){
                 piece_distance = 2 - (sq_a%8 == sq_b%8) - (sq_a/8 == sq_b/8);
             }
-
-            if(min_dis[num_red - 1] > piece_distance){
-                min_dis[num_red-1] = piece_distance;
-                for(int j=num_red-1; j > 0; j--){
-                    if(min_dis[j] < min_dis[j-1]){
-                        swap(min_dis[j], min_dis[j-1]);
-                    }
-                }
-            }
-            
+            path_info[path_size++] = Move_information(sq_a, sq_b, piece_distance);
         }
     }
-    int move_estimate = std::accumulate(min_dis, min_dis + num_red, 0);
+    
+    for(int i=1; i<path_size; i++){
+        for(int j=i; j>0; j--){
+            if( path_info[j].cost < path_info[j-1].cost )
+                swap(path_info[j], path_info[j-1]);
+            else
+                break;
+        }
+    }
+    // sort(path_info, path_info + path_size);
+
+    static bool is_captured[SQUARE_NB];
+
+    fill(is_captured, is_captured + SQUARE_NB, 0);
+    
+    int move_estimate = 0;
+    for(int i=0; i<path_size; i++){
+        if( pos.peek_piece_at( path_info[i].from ).side == Black ){
+            if(is_captured[ path_info[i].to ] or is_captured[ path_info[i].from ])
+                continue;
+        }
+        else{
+            if(is_captured[ path_info[i].to ] and is_captured[ path_info[i].from ])
+                continue;
+        }
+        move_estimate += path_info[i].cost;
+        is_captured[ path_info[i].from ] = 1;
+        is_captured[ path_info[i].to ] = 1;
+    }
+
+    // int move_estimate = std::accumulate(min_dis, min_dis + num_red, 0);
     return move_estimate;
 }
 

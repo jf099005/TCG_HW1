@@ -1,7 +1,7 @@
 #include "solver.h"
 #include "lib/helper.h"
-// #include "IDS_solver/DFS_solver.h"
-#include "memorize_version/DFS_solver.h"
+#include "IDS_solver/DFS_solver.h"
+// #include "memorize_version/DFS_solver.h"
 #include <chrono>
 #define OUTPUT_BOARD false
 using namespace std::chrono;
