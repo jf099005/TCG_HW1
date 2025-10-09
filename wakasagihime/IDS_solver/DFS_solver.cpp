@@ -67,7 +67,9 @@ bool solver::IDS(Position start_pos, int limit_depth, Move* moves){
     }
     if(limit_depth == 0)
         return false;
-    stack<Move> search_space;
+    // stack<Move> search_space;
+    static Move search_space[MAX_MOVES*SQUARE_NB];
+    int search_space_top = 0;
     //top is the number of members of current stack top of the current top of search_space
     int layer_cnt[MAX_MOVE_NUM];
     Position prv_positions[MAX_MOVE_NUM];
@@ -90,14 +92,16 @@ bool solver::IDS(Position start_pos, int limit_depth, Move* moves){
         }
         debug <<endl;
     }
-
+    layer_cnt[0] += first_move_size;
     for(int i=0; i<first_move_size; i++){
-        search_space.push( first_moves[i] );
-        layer_cnt[0]++;
+        // search_space.push( first_moves[i] );
+        search_space[search_space_top++] = first_moves[i];
+        // layer_cnt[0]++;
     }
     
     int depth = 1;
-    while(!search_space.empty()){
+    // while(!search_space.empty()){
+    while(search_space_top > 0){
         assert(0< depth);
         
         assert(depth <= limit_depth);
@@ -106,8 +110,9 @@ bool solver::IDS(Position start_pos, int limit_depth, Move* moves){
             continue;
         }
 
-        Move action_cur = search_space.top();
-        search_space.pop();
+        // Move action_cur = search_space.top();
+        Move action_cur = search_space[--search_space_top];
+        // search_space.pop();
         layer_cnt[depth-1]--;
 
         Position current_pos = prv_positions[depth - 1];
@@ -146,7 +151,8 @@ bool solver::IDS(Position start_pos, int limit_depth, Move* moves){
                 }
                 cout<<endl;
             }
-            
+            // layer_cnt[depth] += nx_moves_size;
+
             for(int move_idx = 0; move_idx < nx_moves_size; move_idx++){
                 Move nx_move = nx_moves[move_idx];
                 Position nx_state(current_pos);
@@ -170,7 +176,8 @@ bool solver::IDS(Position start_pos, int limit_depth, Move* moves){
                 if(!is_new_state)
                     continue;
 
-                search_space.push(nx_move);
+                // search_space.push(nx_move);
+                search_space[search_space_top++] = nx_move;
                 layer_cnt[depth]++;
             }
             if(layer_cnt[depth] > 0){
