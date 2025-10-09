@@ -110,7 +110,7 @@ bool solver::IDS(Position start_pos, int limit_depth, Move* moves){
             return true;
         }
 
-        // record(current_pos, limit_depth - depth);
+        record(current_pos, limit_depth - depth);
 
         if( depth < limit_depth){
             MoveList<All, Black> nx_moves(current_pos);
@@ -126,9 +126,9 @@ bool solver::IDS(Position start_pos, int limit_depth, Move* moves){
                 Position nx_state(current_pos);
                 nx_state.do_move(nx_move);
 
-                // if(is_visited(nx_state, limit_depth - depth - 1)){
-                //     continue;
-                // }
+                if(is_visited(nx_state, limit_depth - depth - 1)){
+                    continue;
+                }
 
                 if(nx_state.winner() == Black){
                     moves[depth] = nx_move;

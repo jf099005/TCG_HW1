@@ -9,7 +9,7 @@ SOURCES = $(LIB_SRC) $(ADD_SOURCES)
 
 # normal wakasagi
 all:
-	g++ -o wakasagi -pg -O2 -DCHINESE_ENABLED=$(CHINESE) -march=native $(SOURCES)
+	g++ -o wakasagi -O2 -DCHINESE_ENABLED=$(CHINESE) -march=native $(SOURCES)
 
 # debug wakasagi
 dbg:
