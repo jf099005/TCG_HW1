@@ -1,0 +1,189 @@
+\documentclass[a4paper, 12pt]{article}  %set doc type and font size
+\usepackage{fontspec}                   %allow setting fonts
+\usepackage{xeCJK}         
+\usepackage{amsmath}
+\newtheorem{theorem}{Theorem}
+\setCJKmainfont{Noto Sans CJK SC}             %call chinese package xeCJK
+% \setmainfont{Times New Roman}           %set English font
+
+% \XeTeXlinebreaklocale "zh"
+% \XeTeXlinebreakskip = 0pt plus 1pt
+
+
+\usepackage{algorithm}
+\usepackage[noend]{algpseudocode}
+
+\title{電腦對局理論 Homework 1}
+\author{蔡平樂}
+\date{\today}
+
+
+\begin{document}
+\maketitle
+
+\section{Algorithm design}
+
+
+主體搜尋使用$IDA^*$配合$DFS1_{cost}$，其中$IDA^*$實作完全與課堂中相同，因此不另外說明。
+$DFS$演算法在一些細節上有修改，具體演算法如下：
+\begin{algorithm}[!h]
+\begin{algorithmic}
+    \Procedure{DFS}{$pos$, $threshold$}
+        \State$Stack\_init(S)$
+        \State$Stack\_init(Prv\_States)$
+        \State$Push(S, pos)$
+        \State$depth \gets 0$
+        \While{\textbf{not} $S.empty()$}
+            \State$current\gets S.pop()$
+            \If{$current == Null$}
+                \State$depth--$
+                \State\textbf{continue}
+            \EndIf
+            \State$record(current, limit\_depth - depth)$
+            \State$NX \gets next\_states\_gen(current.pos)$
+            \State$Next \gets sort\_and\_erase(NX, maximum = threshold - depth - 1)$
+            
+            \State$Push(S, Null)$
+            \For{$nx$ in Next}
+                \If{$is\_visited(nx)$} \textbf{continue}
+                \EndIf
+                \If{$is\_win(nx)$} \textbf{return true}
+                \EndIf
+                \State$Push(S, nx)$
+            \EndFor
+            \State$depth++$
+
+        \EndWhile
+        \State\textbf{return false}
+    \EndProcedure
+\end{algorithmic}
+\end{algorithm}
+
+細節將於其後說明
+
+\subsection{$sort\_and\_erase$}
+$sort\_and\_erase(NX, maximum)$使用Heuristic value排序$NX$，\\
+並移除所有$value > maximum$的元素，因此無須在push階段進行剪枝。
+
+
+實作上，最初是使用標準算法的使用std::sort後於push過程中剪枝，
+但使用gprof時發現heuristic時間佔比相當高，也發現std::sort基本上只調用insertion sort進行排序，
+考量到實作insertion sort時間成本較低，且可以大幅降低heuristic function的呼叫次數，
+因此自行實作sort函數排序$NX$，使用略帶修改的insertion sort，
+使其直接忽略$value > threshold$的元素並能在同時計算$\le threshold$的元素數量，
+實測在公佈的3-3測資上能夠將約60秒的時間壓縮至15秒內，常數上有相當大的優化。
+
+\subsection{$record$ / $is\_visited$}
+在搜索完每個$pos$後，將$(pos, remain\_depth)$紀錄，代表$pos$在深度$remain\_depth$下不可能解開。
+$is\_visit(pos, remain\_depth)$則會判斷是否盤面$pos$是否已搜索過深度$\le remain\_depth$的狀態，若是則return true。
+具體實作如下：
+
+\begin{algorithm}
+    \begin{algorithmic}
+        \Procedure{record}{pos, remain\_depth}
+            \If{$pos \in recorder.keys$}
+                \State$recorder[pos] \gets \max(recorder[pos], remain\_depth)$
+            \Else
+                \State $recorder[pos] \gets remain\_depth$
+            \EndIf
+        \EndProcedure
+
+        \Procedure{$is\_visited$}{$pos, remain\_depth$}
+            \If{$pos \notin recorder.keys$}
+                \textbf{return false}
+            \Else
+                \textbf{ return} $recorder[pos] \ge remain\_depth$
+            \EndIf
+        \EndProcedure
+    \end{algorithmic}
+\end{algorithm}
+
+
+
+\newpage
+\section{Heuristic function design}
+
+\subsection{algorithm}
+
+\begin{algorithmic}[] % [1] 表示每行編號
+    \Procedure{MinimumMoveEstimate}{pos}
+    \State$Priority\_Queue\_init(PQ)$
+
+    \For{$b$ in $Black\_Pieces(pos)$}
+        \For{$r$ in $Red\_Pieces(pos)$}
+            \If {$b$ can capture $r$}
+                \State$EnPriority\_Queue(PQ, dis(b,r))$
+            \EndIf
+        \EndFor
+    \EndFor
+
+
+    \For{$(r_1, r_2)$ be any pair in $Red\_Pieces(pos)$}
+        \For{$r_2$ in $Red\_Pieces(pos)$}
+            \State$EnPriority\_Queue(PQ, dis(r_1,r_2))$
+        \EndFor
+    \EndFor
+
+    \State$N = |Red\_Pieces(pos)|$
+
+    \State$p = sum\{{\rm first\ N\ elements\ in\ PQ}\}$
+
+    \State\textbf{return} $x$
+    \EndProcedure
+\end{algorithmic}
+
+$dis(sq\_a, sq\_b)$ 為位置 $sq\_a$ 到位置 $sq\_b$的最短路徑，在沒有Duck的情形下為Euclidean distance，在有Duck時使用Floyd-Warshall algorithm計算。
+
+
+
+\subsection{admissible proof}
+Fix a board state $pos$, suppose $OPT$ is the exact minimum step to capture all red pieces.\\
+First, we transform a Board $pos$ into a weighted, edge-colored graph $G$ by following:
+
+Let $B = \{b_1,b_2,...,b_n\}$ be the set of all black pieces, 
+and $R = \{r_1,r_2,...,r_m\}$ be the  set of all red pieces.
+Then $G=(V,E)$ with $E=B\cup R$, node of $B$ and
+
+\begin{itemize}
+    \item if $b_i\in B$ can capture $r_j\in R$, then $(b_i, r_j)\in E$ with color Black and weight $dis(b_i.location, r_j.location)$
+    \item foreach $r_i,r_j\in R$, then $(r_i, r_j)\in E$\\
+            with color Red and weight $dis(r_i.location, r_j.location)$
+\end{itemize}
+
+
+Suppose we have an optimal solution.\\
+Foreach single $b_k$, define $M_k$ as the move of $b_k$ in the optimal solution, and $R_k = \{r^k_1, r^k_2,...,r^k_{n_k} \}$ be the red pieces captured by $b_k$ sequentially in the optimal solution, 
+then by the proposition of optimal solution, we have following proposition
+\begin{itemize}
+    \item $(b_k,r^k_1)\in E, (r^k_i, r_{i+1}^k)\in E\forall i<n_k+1$
+    \item $\bigcup_k R_k = R$, each $R_k$ disjoint.
+    \item Let $P_k=\{(b_k, r^k_1), (r^k_1, r^k_2),...,(r^k_{n_k-1}, r^k_{n_k})\}$ be the path, then the union of all paths will cover all red nodes.
+    i.e. $R\subseteq \cup_{k=1}^n P_k$
+\end{itemize}
+
+% Then we will prove $OPT$ less or equal the solution of following problem
+% \begin{align*}
+%     {\rm Find\ paths} P_1,P_2,...,P_M {\rm with}  
+% \end{align*}
+
+
+
+from triangular equation we have
+
+\begin{align*}
+    M_k \ge weight(b_k, r^k_1) + \sum_{j=1}^{n_k-1} weight(r^k_j,r^k_{j+1})
+\end{align*}
+
+Therefore
+
+\begin{equation*}
+    Optimal\ solution\ steps = \sum_{k=1}^n M_k \ge \sum_{k=1}^n weight(b_k, r^k_1) + \sum_{j=1}^{n_k-1} weight(r^k_j,r^k_{j+1})
+\end{equation*}
+
+$\sum_{k=1}^n weight(b_k, r^k_1) + \sum_{j=1}^{n_k-1} weight(r^k_j,r^k_{j+1})$ 
+is the sum of $|R|$ edges in $G$, and it will smaller or equal than the sum of $|R|$ edges
+with minimum weight at $G$.
+
+\subsubsection{Variant of the algorithm}
+
+\end{document}
