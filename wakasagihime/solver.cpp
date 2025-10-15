@@ -3,7 +3,7 @@
 #include "IDS_solver/DFS_solver.h"
 // #include "memorize_version/DFS_solver.h"
 #include <chrono>
-#define OUTPUT_BOARD false
+#define OUTPUT_BOARD true
 using namespace std::chrono;
 
 /*

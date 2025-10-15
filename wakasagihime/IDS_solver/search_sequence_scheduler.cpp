@@ -182,11 +182,12 @@ int visit_seq_scheduler::min_route_estimate(const Position& pos) const{
     }
     
     for(int i=1; i<path_size; i++){
-        for(int j=i; j>0; j--){
-            if( path_info[j].cost < path_info[j-1].cost )
-                swap(path_info[j], path_info[j-1]);
-            else
-                break;
+        int j = i;
+        while(path_info[j].cost < path_info[j-1].cost and j > 0){
+            swap(path_info[j].cost, path_info[j-1].cost);
+            swap(path_info[j].from, path_info[j-1].from);
+            swap(path_info[j].to, path_info[j-1].to);
+            j--;
         }
     }
     // sort(path_info, path_info + path_size);
@@ -195,11 +196,18 @@ int visit_seq_scheduler::min_route_estimate(const Position& pos) const{
 
     fill(is_captured, is_captured + SQUARE_NB, 0);
     
+    // if(1){
+    //     cout<<"paths:"<<endl;
+    //     for(int i=0;i<path_size;i++){
+    //         cout<< path_info[i].from << "->" << path_info[i].to <<" : " <<path_info[i].cost <<endl;
+    //     }
+    // }
+
     int move_estimate = 0;
     for(int i=0; i<path_size; i++){
         if( pos.peek_piece_at( path_info[i].from ).side == Black ){
-            if(is_captured[ path_info[i].to ] or is_captured[ path_info[i].from ])
-                continue;
+            // if(is_captured[ path_info[i].to ] or is_captured[ path_info[i].from ])
+            //     continue;
         }
         else{
             if(is_captured[ path_info[i].to ] and is_captured[ path_info[i].from ])
@@ -208,6 +216,10 @@ int visit_seq_scheduler::min_route_estimate(const Position& pos) const{
         move_estimate += path_info[i].cost;
         is_captured[ path_info[i].from ] = 1;
         is_captured[ path_info[i].to ] = 1;
+        
+        num_red--;
+        if(!num_red)
+            break;
     }
 
     // int move_estimate = std::accumulate(min_dis, min_dis + num_red, 0);
