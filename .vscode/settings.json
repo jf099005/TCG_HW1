@@ -72,6 +72,9 @@
         "__hash_table": "cpp",
         "__split_buffer": "cpp",
         "__tree": "cpp",
-        "locale": "cpp"
+        "locale": "cpp",
+        "complex": "cpp",
+        "list": "cpp",
+        "shared_mutex": "cpp"
     }
 }

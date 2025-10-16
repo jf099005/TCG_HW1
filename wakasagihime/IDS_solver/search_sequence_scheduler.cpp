@@ -190,11 +190,42 @@ int visit_seq_scheduler::min_route_estimate(const Position& pos) const{
             j--;
         }
     }
-    // sort(path_info, path_info + path_size);
 
-    static bool is_captured[SQUARE_NB];
 
-    fill(is_captured, is_captured + SQUARE_NB, 0);
+    static struct DSU {
+        std::vector<int> p, sz;
+
+        DSU(int n) : p(n), sz(n, 1) {
+            // std::iota(p.begin(), p.end(), 0);
+        }
+
+        void init(){
+            for(int i=0; i<p.size(); i++){
+                p[i] = i;
+                sz[i] = 0;
+            }
+        }
+
+        int find(int x) {
+            if (p[x] == x) return x;
+            return p[x] = find(p[x]);
+        }
+
+        void unite(int a, int b) {
+            a = find(a);
+            b = find(b);
+            if (a == b) return;
+            if (sz[a] < sz[b]) std::swap(a, b);
+            p[b] = a;
+            sz[a] += sz[b];
+        }
+
+        bool same(int a, int b) {
+            return find(a) == find(b);
+        }
+    } root(SQUARE_NB);
+
+    // fill(is_captured, is_captured + SQUARE_NB, 0);
     
     // if(1){
     //     cout<<"paths:"<<endl;
@@ -203,26 +234,24 @@ int visit_seq_scheduler::min_route_estimate(const Position& pos) const{
     //     }
     // }
 
+    root.init();
     int move_estimate = 0;
     for(int i=0; i<path_size; i++){
-        if( pos.peek_piece_at( path_info[i].from ).side == Black ){
-            // if(is_captured[ path_info[i].to ] or is_captured[ path_info[i].from ])
-            //     continue;
-        }
-        else{
-            if(is_captured[ path_info[i].to ] and is_captured[ path_info[i].from ])
+        if( pos.peek_piece_at( path_info[i].from ).side == Red ){
+            // if(is_captured[ path_info[i].to ] and is_captured[ path_info[i].from ])
+            if(root.same(path_info[i].from, path_info[i].to))
                 continue;
         }
         move_estimate += path_info[i].cost;
-        is_captured[ path_info[i].from ] = 1;
-        is_captured[ path_info[i].to ] = 1;
+        root.unite(path_info[i].from, path_info[i].to);
+        // is_captured[ path_info[i].from ] = 1;
+        // is_captured[ path_info[i].to ] = 1;
         
         num_red--;
         if(!num_red)
             break;
     }
 
-    // int move_estimate = std::accumulate(min_dis, min_dis + num_red, 0);
     return move_estimate;
 }
 
